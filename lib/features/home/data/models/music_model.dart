@@ -1,6 +1,6 @@
 class Music {
   final String uid;
-  final String userId;
+  final int userId;
   final String title;
   final String artist;
   final String url;
