@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const DefaultTabController(
-        length: 4,
+        length: Constants.tabBarLength,
         child: HomeScreen(),
       ),
     );
