@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stopify/constants/app_colors.dart';
 import 'package:stopify/constants/constants.dart';
 import 'package:stopify/features/home/presentation/screens/home_screen.dart';
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: Constants.appName,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: AppColors.primaryColor,
       ),
       home: const DefaultTabController(
         length: Constants.tabBarLength,

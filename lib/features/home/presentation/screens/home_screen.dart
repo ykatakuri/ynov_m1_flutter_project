@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stopify/constants/constants.dart';
+import 'package:stopify/features/home/presentation/screens/home_view.dart';
 import 'package:stopify/features/home/presentation/widgets/custom_bottom_tab_bar.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -13,7 +14,7 @@ class HomeScreen extends StatelessWidget {
       ),
       body: const TabBarView(
         children: [
-          Icon(Icons.home),
+          HomeView(),
           Icon(Icons.search),
           Icon(Icons.library_music),
           Icon(Icons.person),

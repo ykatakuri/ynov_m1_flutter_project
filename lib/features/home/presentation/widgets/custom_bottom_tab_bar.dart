@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stopify/constants/app_colors.dart';
 
 class CustomBottomTabBar extends StatelessWidget {
   const CustomBottomTabBar({
@@ -23,7 +24,7 @@ class CustomBottomTabBar extends StatelessWidget {
             icon: Icon(Icons.person),
           ),
         ],
-        labelColor: Colors.blue,
+        labelColor: AppColors.primaryColor,
         unselectedLabelColor: Colors.grey,
       ),
     );
