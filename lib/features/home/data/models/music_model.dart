@@ -3,13 +3,14 @@ class Music {
   final String userId;
   final String title;
   final String artist;
+  final String url;
 
-  Music({
-    required this.uid,
-    required this.userId,
-    required this.title,
-    required this.artist,
-  });
+  Music(
+      {required this.uid,
+      required this.userId,
+      required this.title,
+      required this.artist,
+      required this.url});
 
   factory Music.fromJson(Map<String, dynamic> json) {
     return Music(
@@ -17,6 +18,7 @@ class Music {
       userId: json['userId'],
       title: json['title'],
       artist: json['artist'],
+      url: json['url'],
     );
   }
 }
