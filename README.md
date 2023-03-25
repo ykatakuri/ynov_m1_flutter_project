@@ -30,5 +30,9 @@ Our app contains the below features:
 
 ## Resources
 
-- [Streaming audio in Flutter with Just Audio](https://suragch.medium.com/steaming-audio-in-flutter-with-just-audio-7435fcf672bf)
-- [Managing playlists in Flutter with Just Audio](https://suragch.medium.com/managing-playlists-in-flutter-with-just-audio-c4b8f2af12eb)
+- [Just Audio documentation](https://pub.dev/packages/just_audio)
+- [Audio Video Progress bar documentation](https://pub.dev/packages/audio_video_progress_bar)
+- [Tuto: Streaming audio in Flutter with Just Audio](https://suragch.medium.com/steaming-audio-in-flutter-with-just-audio-7435fcf672bf)
+- [Tuto: Managing playlists in Flutter with Just Audio](https://suragch.medium.com/managing-playlists-in-flutter-with-just-audio-c4b8f2af12eb)
+- [Flutter launcher icons documentation](https://pub.dev/packages/flutter_launcher_icons)
+- [Flutter native splash documentation](https://pub.dev/packages/flutter_native_splash)
