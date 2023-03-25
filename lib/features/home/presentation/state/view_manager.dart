@@ -36,6 +36,15 @@ class ViewManager {
         total: oldState.total,
       );
     });
+
+    _audioPlayer.bufferedPositionStream.listen((bufferedPosition) {
+      final oldState = progressNotifier.value;
+      progressNotifier.value = ProgressBarState(
+        current: oldState.current,
+        buffered: bufferedPosition,
+        total: oldState.total,
+      );
+    });
   }
 
   void play() {
