@@ -24,6 +24,10 @@ class ViewManager {
     _audioPlayer.pause();
   }
 
+  void dispose() {
+    _audioPlayer.dispose();
+  }
+
   final progressNotifier = ValueNotifier<ProgressBarState>(
     ProgressBarState(
       current: Duration.zero,

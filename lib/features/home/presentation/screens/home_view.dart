@@ -22,6 +22,12 @@ class _HomeViewState extends State<HomeView> {
   }
 
   @override
+  void dispose() {
+    _viewManager.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
