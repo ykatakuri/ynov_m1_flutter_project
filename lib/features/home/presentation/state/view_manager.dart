@@ -23,8 +23,11 @@ class ViewManager {
         buttonNotifier.value = ButtonState.loading;
       } else if (!isPlaying) {
         buttonNotifier.value = ButtonState.paused;
-      } else {
+      } else if (processingState != ProcessingState.completed) {
         buttonNotifier.value = ButtonState.playing;
+      } else {
+        _audioPlayer.seek(Duration.zero);
+        _audioPlayer.pause();
       }
     });
 
