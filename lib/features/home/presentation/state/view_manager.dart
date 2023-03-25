@@ -16,6 +16,14 @@ class ViewManager {
     await _audioPlayer.setUrl(url);
   }
 
+  void play() {
+    _audioPlayer.play();
+  }
+
+  void pause() {
+    _audioPlayer.pause();
+  }
+
   final progressNotifier = ValueNotifier<ProgressBarState>(
     ProgressBarState(
       current: Duration.zero,

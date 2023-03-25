@@ -104,14 +104,14 @@ class _HomeViewState extends State<HomeView> {
                                       Icons.play_circle_fill_rounded),
                                   iconSize: Constants.playIconSize,
                                   color: AppColors.secondaryColor,
-                                  onPressed: () {},
+                                  onPressed: _viewManager.play,
                                 );
                               case ButtonState.playing:
                                 return IconButton(
                                   icon: const Icon(Icons.pause),
                                   iconSize: Constants.playIconSize,
                                   color: AppColors.secondaryColor,
-                                  onPressed: () {},
+                                  onPressed: _viewManager.pause,
                                 );
                             }
                           },
