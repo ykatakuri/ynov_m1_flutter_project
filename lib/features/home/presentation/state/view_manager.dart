@@ -68,6 +68,10 @@ class ViewManager {
     _audioPlayer.dispose();
   }
 
+  void seek(Duration position) {
+    _audioPlayer.seek(position);
+  }
+
   final progressNotifier = ValueNotifier<ProgressBarState>(
     ProgressBarState(
       current: Duration.zero,

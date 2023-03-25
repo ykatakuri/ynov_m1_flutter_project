@@ -74,12 +74,14 @@ class _HomeViewState extends State<HomeView> {
                             progress: value.current,
                             total: value.total,
                             buffered: value.buffered,
+                            onSeek: _viewManager.seek,
                             baseBarColor: AppColors.secondaryColor,
                             progressBarColor: Colors.amber,
                             thumbColor: Colors.amber,
                             timeLabelTextStyle: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700),
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                            ),
                           );
                         },
                       ),
