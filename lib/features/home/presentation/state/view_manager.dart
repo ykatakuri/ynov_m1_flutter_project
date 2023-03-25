@@ -14,6 +14,19 @@ class ViewManager {
   void _init() async {
     _audioPlayer = AudioPlayer();
     await _audioPlayer.setUrl(url);
+
+    _audioPlayer.playerStateStream.listen((playerState) {
+      final isPlaying = playerState.playing;
+      final processingState = playerState.processingState;
+      if (processingState == ProcessingState.loading ||
+          processingState == ProcessingState.buffering) {
+        buttonNotifier.value = ButtonState.loading;
+      } else if (!isPlaying) {
+        buttonNotifier.value = ButtonState.paused;
+      } else {
+        buttonNotifier.value = ButtonState.playing;
+      }
+    });
   }
 
   void play() {
