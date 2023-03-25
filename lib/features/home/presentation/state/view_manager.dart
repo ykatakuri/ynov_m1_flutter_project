@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:stopify/constants/constants.dart';
 
 class ViewManager {
-  static const url =
-      'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3';
-
   late AudioPlayer _audioPlayer;
 
   ViewManager() {
@@ -13,7 +11,7 @@ class ViewManager {
 
   void _init() async {
     _audioPlayer = AudioPlayer();
-    await _audioPlayer.setUrl(url);
+    await _audioPlayer.setUrl(Constants.radioUrl);
 
     _audioPlayer.playerStateStream.listen((playerState) {
       final isPlaying = playerState.playing;
