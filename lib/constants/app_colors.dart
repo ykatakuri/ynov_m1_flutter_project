@@ -4,4 +4,5 @@ class AppColors {
   static const primaryColor = Colors.deepOrange;
   static const shadowColor = Colors.amber;
   static const secondaryColor = Colors.white;
+  static const progressBarColor = Colors.amber;
 }
