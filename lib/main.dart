@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: Constants.appName,
       theme: ThemeData(
-        primarySwatch: AppColors.primaryColor,
+        primaryColor: AppColors.primaryColor,
       ),
       home: const DefaultTabController(
         length: Constants.tabBarLength,
