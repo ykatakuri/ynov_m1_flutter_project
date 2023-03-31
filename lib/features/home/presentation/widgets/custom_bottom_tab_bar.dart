@@ -18,6 +18,9 @@ class CustomBottomTabBar extends StatelessWidget {
             icon: Icon(Icons.search),
           ),
           Tab(
+            icon: Icon(Icons.library_music),
+          ),
+          Tab(
             icon: Icon(Icons.live_tv),
           ),
         ],

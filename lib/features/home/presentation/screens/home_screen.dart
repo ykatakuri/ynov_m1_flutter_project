@@ -27,6 +27,7 @@ class HomeScreen extends StatelessWidget {
         children: [
           HomeView(),
           Icon(Icons.search),
+          Icon(Icons.library_music),
           Icon(Icons.live_tv),
         ],
       ),
