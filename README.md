@@ -17,11 +17,12 @@ samples, guidance on mobile development, and a full API reference.
 
 Our app contains the below features:
 
-- Listen a song
+- Dowload a song
+- A library of downloaded songs
 - Search for a song
-- Add a song to favorite
+- Listen a stream audio
 
-## DATA OR APIs
+## Data / APIs
 
 ### USE IN DEV ENVIRONMENT
 
