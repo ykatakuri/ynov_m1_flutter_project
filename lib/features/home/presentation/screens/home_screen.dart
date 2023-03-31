@@ -17,7 +17,6 @@ class HomeScreen extends StatelessWidget {
           HomeView(),
           Icon(Icons.search),
           Icon(Icons.library_music),
-          Icon(Icons.person),
         ],
       ),
       bottomNavigationBar: const CustomBottomTabBar(),
