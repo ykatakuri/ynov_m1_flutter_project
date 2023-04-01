@@ -9,4 +9,12 @@ class Constants {
       'https://listen.radioking.com/radio/242578/stream/286663';
 
   static double playlistBoxHeight = 300;
+
+  // Tab bar
+  static const homeText = 'Accueil';
+  static const searchText = 'Recherche';
+  static const libraryText = 'Bibliothèque';
+  static const liveText = 'Live';
+  static double tabBarIconSize = 35;
+  static double labelFontSize = 12;
 }
