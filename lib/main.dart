@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
         length: Constants.tabBarLength,
         child: HomeScreen(),
       ),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
