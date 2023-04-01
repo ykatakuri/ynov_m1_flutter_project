@@ -14,6 +14,8 @@ List<Music> playList = [
     title: 'Song One',
     artist: 'Artist One',
     url: 'https://listen.radioking.com/radio/242578/stream/286663',
+    cover:
+        'https://d1csarkz8obe9u.cloudfront.net/themedlandingpages/tlp_hero_album-cover-art-588174bffe0bcb491737d700db8e77df-1554161328.jpg',
   ),
   Music(
     uid: uid,
@@ -21,6 +23,8 @@ List<Music> playList = [
     title: 'Song Two',
     artist: 'Artist Two',
     url: 'https://listen.radioking.com/radio/242578/stream/286663',
+    cover:
+        'https://d1csarkz8obe9u.cloudfront.net/themedlandingpages/tlp_hero_album-cover-art-588174bffe0bcb491737d700db8e77df-1554161328.jpg',
   ),
   Music(
     uid: uid,
@@ -28,6 +32,8 @@ List<Music> playList = [
     title: 'Song Three',
     artist: 'Artist Three',
     url: 'https://listen.radioking.com/radio/242578/stream/286663',
+    cover:
+        'https://d1csarkz8obe9u.cloudfront.net/themedlandingpages/tlp_hero_album-cover-art-588174bffe0bcb491737d700db8e77df-1554161328.jpg',
   ),
   Music(
     uid: uid,
@@ -35,6 +41,8 @@ List<Music> playList = [
     title: 'Song Four',
     artist: 'Artist Four',
     url: 'https://listen.radioking.com/radio/242578/stream/286663',
+    cover:
+        'https://d1csarkz8obe9u.cloudfront.net/themedlandingpages/tlp_hero_album-cover-art-588174bffe0bcb491737d700db8e77df-1554161328.jpg',
   ),
   Music(
     uid: uid,
@@ -42,6 +50,8 @@ List<Music> playList = [
     title: 'Song Five',
     artist: 'Artist Five',
     url: 'https://listen.radioking.com/radio/242578/stream/286663',
+    cover:
+        'https://d1csarkz8obe9u.cloudfront.net/themedlandingpages/tlp_hero_album-cover-art-588174bffe0bcb491737d700db8e77df-1554161328.jpg',
   ),
   Music(
     uid: uid,
@@ -49,6 +59,8 @@ List<Music> playList = [
     title: 'Song Six',
     artist: 'Artist Six',
     url: 'https://listen.radioking.com/radio/242578/stream/286663',
+    cover:
+        'https://d1csarkz8obe9u.cloudfront.net/themedlandingpages/tlp_hero_album-cover-art-588174bffe0bcb491737d700db8e77df-1554161328.jpg',
   ),
   Music(
     uid: uid,
@@ -56,6 +68,8 @@ List<Music> playList = [
     title: 'Song Seven',
     artist: 'Artist Seven',
     url: 'https://listen.radioking.com/radio/242578/stream/286663',
+    cover:
+        'https://d1csarkz8obe9u.cloudfront.net/themedlandingpages/tlp_hero_album-cover-art-588174bffe0bcb491737d700db8e77df-1554161328.jpg',
   ),
   Music(
     uid: uid,
@@ -63,6 +77,8 @@ List<Music> playList = [
     title: 'Song Eight',
     artist: 'Artist Eight',
     url: 'https://listen.radioking.com/radio/242578/stream/286663',
+    cover:
+        'https://d1csarkz8obe9u.cloudfront.net/themedlandingpages/tlp_hero_album-cover-art-588174bffe0bcb491737d700db8e77df-1554161328.jpg',
   ),
   Music(
     uid: uid,
@@ -70,6 +86,8 @@ List<Music> playList = [
     title: 'Song Nine',
     artist: 'Artist Nine',
     url: 'https://listen.radioking.com/radio/242578/stream/286663',
+    cover:
+        'https://d1csarkz8obe9u.cloudfront.net/themedlandingpages/tlp_hero_album-cover-art-588174bffe0bcb491737d700db8e77df-1554161328.jpg',
   ),
   Music(
     uid: uid,
@@ -77,5 +95,7 @@ List<Music> playList = [
     title: 'Song Ten',
     artist: 'Artist Ten',
     url: 'https://listen.radioking.com/radio/242578/stream/286663',
+    cover:
+        'https://d1csarkz8obe9u.cloudfront.net/themedlandingpages/tlp_hero_album-cover-art-588174bffe0bcb491737d700db8e77df-1554161328.jpg',
   ),
 ];
