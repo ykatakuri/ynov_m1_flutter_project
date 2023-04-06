@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:stopify/constants/constants.dart';
 import 'package:stopify/features/home/presentation/notifiers/play_button_notifier.dart';
 import 'package:stopify/features/home/presentation/notifiers/progress_notifier.dart';
 
@@ -12,34 +11,56 @@ class ViewManager {
   final playButtonNotifier = PlayButtonNotifier();
   final isLastSongNotifier = ValueNotifier<bool>(true);
 
-  late AudioPlayer _audioPlayer;
+  late AudioPlayer audioPlayer;
   late ConcatenatingAudioSource _playlist;
 
   ViewManager() {
-    _init();
+    init();
   }
 
-  void _init() async {
-    _audioPlayer = AudioPlayer();
-    await _audioPlayer.setUrl(Constants.radioUrl);
+  void init() async {
+    audioPlayer = AudioPlayer();
+    setInitialPlaylist();
+    listenForChangesInPlayerState();
+    listenForChangesInPlayerPosition();
+    listenForChangesInBufferedPosition();
+    listenForChangesInTotalDuration();
+    listenForChangesInSequenceState();
+  }
 
-    _audioPlayer.playerStateStream.listen((playerState) {
+  void setInitialPlaylist() async {
+    const prefix = 'https://www.soundhelix.com/examples/mp3';
+    final song1 = Uri.parse('$prefix/SoundHelix-Song-1.mp3');
+    final song2 = Uri.parse('$prefix/SoundHelix-Song-2.mp3');
+    final song3 = Uri.parse('$prefix/SoundHelix-Song-3.mp3');
+    _playlist = ConcatenatingAudioSource(children: [
+      AudioSource.uri(song1, tag: 'Song 1'),
+      AudioSource.uri(song2, tag: 'Song 2'),
+      AudioSource.uri(song3, tag: 'Song 3'),
+    ]);
+    await audioPlayer.setAudioSource(_playlist);
+  }
+
+  void listenForChangesInPlayerState() {
+    audioPlayer.playerStateStream.listen((playerState) {
       final isPlaying = playerState.playing;
       final processingState = playerState.processingState;
       if (processingState == ProcessingState.loading ||
           processingState == ProcessingState.buffering) {
-        buttonNotifier.value = ButtonState.loading;
+        playButtonNotifier.value = ButtonState.loading;
       } else if (!isPlaying) {
-        buttonNotifier.value = ButtonState.paused;
+        playButtonNotifier.value = ButtonState.paused;
       } else if (processingState != ProcessingState.completed) {
-        buttonNotifier.value = ButtonState.playing;
+        playButtonNotifier.value = ButtonState.playing;
       } else {
-        _audioPlayer.seek(Duration.zero);
-        _audioPlayer.pause();
+        audioPlayer.seek(Duration.zero);
+        audioPlayer.pause();
       }
     });
+  }
 
-    _audioPlayer.positionStream.listen((position) {
+  void listenForChangesInPlayerPosition() {
+    audioPlayer.positionStream.listen((position) {
       final oldState = progressNotifier.value;
       progressNotifier.value = ProgressBarState(
         current: position,
@@ -47,8 +68,10 @@ class ViewManager {
         total: oldState.total,
       );
     });
+  }
 
-    _audioPlayer.bufferedPositionStream.listen((bufferedPosition) {
+  void listenForChangesInBufferedPosition() {
+    audioPlayer.bufferedPositionStream.listen((bufferedPosition) {
       final oldState = progressNotifier.value;
       progressNotifier.value = ProgressBarState(
         current: oldState.current,
@@ -56,8 +79,10 @@ class ViewManager {
         total: oldState.total,
       );
     });
+  }
 
-    _audioPlayer.durationStream.listen((totalDuration) {
+  void listenForChangesInTotalDuration() {
+    audioPlayer.durationStream.listen((totalDuration) {
       final oldState = progressNotifier.value;
       progressNotifier.value = ProgressBarState(
         current: oldState.current,
@@ -67,43 +92,52 @@ class ViewManager {
     });
   }
 
+  void listenForChangesInSequenceState() {
+    audioPlayer.sequenceStateStream.listen((sequenceState) {
+      if (sequenceState == null) return;
+
+      // update current song title
+      final currentItem = sequenceState.currentSource;
+      final title = currentItem?.tag as String?;
+      currentSongTitleNotifier.value = title ?? '';
+
+      // update playlist
+      final playlist = sequenceState.effectiveSequence;
+      final titles = playlist.map((item) => item.tag as String).toList();
+      playlistNotifier.value = titles;
+
+      // update previous and next buttons
+      if (playlist.isEmpty || currentItem == null) {
+        isFirstSongNotifier.value = true;
+        isLastSongNotifier.value = true;
+      } else {
+        isFirstSongNotifier.value = playlist.first == currentItem;
+        isLastSongNotifier.value = playlist.last == currentItem;
+      }
+    });
+  }
+
   void play() {
-    _audioPlayer.play();
+    audioPlayer.play();
   }
 
   void pause() {
-    _audioPlayer.pause();
+    audioPlayer.pause();
   }
 
   void dispose() {
-    _audioPlayer.dispose();
+    audioPlayer.dispose();
   }
 
   void seek(Duration position) {
-    _audioPlayer.seek(position);
+    audioPlayer.seek(position);
   }
 
-  final progressNotifier = ValueNotifier<ProgressBarState>(
-    ProgressBarState(
-      current: Duration.zero,
-      buffered: Duration.zero,
-      total: Duration.zero,
-    ),
-  );
+  void onPreviousSongButtonPressed() {
+    audioPlayer.seekToPrevious();
+  }
 
-  final buttonNotifier = ValueNotifier<ButtonState>(ButtonState.paused);
+  void onNextSongButtonPressed() {
+    audioPlayer.seekToNext();
+  }
 }
-
-class ProgressBarState {
-  ProgressBarState({
-    required this.current,
-    required this.buffered,
-    required this.total,
-  });
-
-  final Duration current;
-  final Duration buffered;
-  final Duration total;
-}
-
-enum ButtonState { paused, playing, loading }
