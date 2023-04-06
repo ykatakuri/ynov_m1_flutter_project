@@ -17,22 +17,15 @@ class CustomPlayer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            AppColors.primaryColor,
-            Colors.grey,
-          ],
-          transform: GradientRotation(10),
-        ),
         borderRadius: BorderRadius.circular(32),
       ),
       child: Column(
         children: [
+          const SizedBox(height: 42),
           Center(
             child: CurrentSongTitle(viewManager: _viewManager),
           ),
+          const SizedBox(height: 150),
           PlayerProgressBar(viewManager: _viewManager),
           PlayerControls(viewManager: _viewManager),
         ],
@@ -59,7 +52,8 @@ class CurrentSongTitle extends StatelessWidget {
           child: InlineText(
             title,
             style: const TextStyle(
-              fontSize: 14,
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
               color: AppColors.secondaryColor,
             ),
           ),

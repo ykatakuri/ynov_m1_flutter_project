@@ -152,12 +152,12 @@ class _HomeViewState extends State<HomeView> {
                           showModalBottomSheet<void>(
                             context: context,
                             builder: (BuildContext context) {
-                              return Container(
-                                color: Colors.black,
-                                height: 170,
+                              return SizedBox(
+                                height: MediaQuery.of(context).size.height,
                                 child: CustomPlayer(viewManager: _viewManager),
                               );
                             },
+                            isScrollControlled: true,
                           );
                         },
                         icon: const Icon(
