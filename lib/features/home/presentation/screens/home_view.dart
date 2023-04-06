@@ -3,7 +3,7 @@ import 'package:stopify/constants/app_colors.dart';
 import 'package:stopify/constants/constants.dart';
 import 'package:stopify/features/home/data/datasources/dump_data.dart';
 import 'package:stopify/features/home/presentation/state/view_manager.dart';
-import 'package:stopify/features/home/presentation/widgets/player_button.dart';
+import 'package:stopify/features/home/presentation/widgets/custom_player.dart';
 import 'package:text_helpers/text_helpers.dart';
 
 class HomeView extends StatefulWidget {
@@ -135,8 +135,8 @@ class _HomeViewState extends State<HomeView> {
                         onPressed: () {},
                         icon: const Icon(
                           Icons.add_circle_outline,
-                          color: Colors.white70,
                         ),
+                        color: Colors.white70,
                         iconSize: 35,
                       ),
                       Expanded(child: Container()),
@@ -147,33 +147,24 @@ class _HomeViewState extends State<HomeView> {
                           fontSize: 10,
                         ),
                       ),
-                      ValueListenableBuilder<ButtonState>(
-                        valueListenable: _viewManager.buttonNotifier,
-                        builder: (_, value, __) {
-                          switch (value) {
-                            case ButtonState.loading:
+                      IconButton(
+                        onPressed: () {
+                          showModalBottomSheet<void>(
+                            context: context,
+                            builder: (BuildContext context) {
                               return Container(
-                                margin: const EdgeInsets.all(8.0),
-                                width: 32.0,
-                                height: 32.0,
-                                child: const CircularProgressIndicator(
-                                  color: AppColors.secondaryColor,
-                                ),
+                                color: Colors.black,
+                                height: 150,
+                                child: CustomPlayer(viewManager: _viewManager),
                               );
-                            case ButtonState.paused:
-                              return PlayerButton(
-                                iconData: Icons.play_circle_fill_rounded,
-                                iconSize: 45,
-                                onPressed: _viewManager.play,
-                              );
-                            case ButtonState.playing:
-                              return PlayerButton(
-                                iconData: Icons.pause_circle_outline_rounded,
-                                iconSize: 45,
-                                onPressed: _viewManager.pause,
-                              );
-                          }
+                            },
+                          );
                         },
+                        icon: const Icon(
+                          Icons.play_circle_fill_rounded,
+                        ),
+                        color: AppColors.secondaryColor,
+                        iconSize: 45,
                       ),
                     ],
                   ),
