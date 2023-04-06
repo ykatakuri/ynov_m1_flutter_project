@@ -154,7 +154,7 @@ class _HomeViewState extends State<HomeView> {
                             builder: (BuildContext context) {
                               return Container(
                                 color: Colors.black,
-                                height: 150,
+                                height: 170,
                                 child: CustomPlayer(viewManager: _viewManager),
                               );
                             },

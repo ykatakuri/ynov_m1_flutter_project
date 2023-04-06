@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stopify/constants/app_colors.dart';
 import 'package:stopify/constants/constants.dart';
+import 'package:stopify/features/home/presentation/notifiers/play_button_notifier.dart';
 import 'package:stopify/features/home/presentation/state/view_manager.dart';
 import 'package:stopify/features/home/presentation/widgets/player_button.dart';
 
@@ -17,13 +18,19 @@ class PlayerControls extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        PlayerButton(
-          iconData: Icons.skip_previous,
-          iconSize: Constants.previousAndNextIconSize,
-          onPressed: () {},
+        ValueListenableBuilder<bool>(
+          valueListenable: _viewManager.isFirstSongNotifier,
+          builder: (_, isFirst, __) {
+            return PlayerButton(
+              iconData: Icons.skip_previous,
+              iconSize: Constants.previousAndNextIconSize,
+              onPressed:
+                  (isFirst) ? null : _viewManager.onPreviousSongButtonPressed,
+            );
+          },
         ),
         ValueListenableBuilder<ButtonState>(
-          valueListenable: _viewManager.buttonNotifier,
+          valueListenable: _viewManager.playButtonNotifier,
           builder: (_, value, __) {
             switch (value) {
               case ButtonState.loading:
@@ -50,10 +57,15 @@ class PlayerControls extends StatelessWidget {
             }
           },
         ),
-        PlayerButton(
-          iconData: Icons.skip_next,
-          iconSize: Constants.previousAndNextIconSize,
-          onPressed: () {},
+        ValueListenableBuilder<bool>(
+          valueListenable: _viewManager.isLastSongNotifier,
+          builder: (_, isLast, __) {
+            return PlayerButton(
+              iconData: Icons.skip_next,
+              iconSize: Constants.previousAndNextIconSize,
+              onPressed: (isLast) ? null : _viewManager.onNextSongButtonPressed,
+            );
+          },
         ),
       ],
     );

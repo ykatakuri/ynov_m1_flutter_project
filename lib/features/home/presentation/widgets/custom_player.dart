@@ -3,6 +3,7 @@ import 'package:stopify/constants/app_colors.dart';
 import 'package:stopify/features/home/presentation/state/view_manager.dart';
 import 'package:stopify/features/home/presentation/widgets/player_controls.dart';
 import 'package:stopify/features/home/presentation/widgets/player_progress_bar.dart';
+import 'package:text_helpers/text_helpers.dart';
 
 class CustomPlayer extends StatelessWidget {
   const CustomPlayer({
@@ -29,10 +30,41 @@ class CustomPlayer extends StatelessWidget {
       ),
       child: Column(
         children: [
+          Center(
+            child: CurrentSongTitle(viewManager: _viewManager),
+          ),
           PlayerProgressBar(viewManager: _viewManager),
           PlayerControls(viewManager: _viewManager),
         ],
       ),
+    );
+  }
+}
+
+class CurrentSongTitle extends StatelessWidget {
+  const CurrentSongTitle({
+    required this.viewManager,
+    Key? key,
+  }) : super(key: key);
+
+  final ViewManager viewManager;
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<String>(
+      valueListenable: viewManager.currentSongTitleNotifier,
+      builder: (_, title, __) {
+        return Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: InlineText(
+            title,
+            style: const TextStyle(
+              fontSize: 14,
+              color: AppColors.secondaryColor,
+            ),
+          ),
+        );
+      },
     );
   }
 }

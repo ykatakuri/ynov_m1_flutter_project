@@ -1,6 +1,7 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:stopify/constants/app_colors.dart';
+import 'package:stopify/features/home/presentation/notifiers/progress_notifier.dart';
 import 'package:stopify/features/home/presentation/state/view_manager.dart';
 
 class PlayerProgressBar extends StatelessWidget {
@@ -14,7 +15,7 @@ class PlayerProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(32, 22, 32, 0),
+      padding: const EdgeInsets.fromLTRB(32, 20, 32, 0),
       child: ValueListenableBuilder<ProgressBarState>(
         valueListenable: _viewManager.progressNotifier,
         builder: (_, value, __) {
