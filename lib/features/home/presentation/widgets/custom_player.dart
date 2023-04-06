@@ -26,8 +26,27 @@ class CustomPlayer extends StatelessWidget {
             child: CurrentSongTitle(viewManager: _viewManager),
           ),
           const SizedBox(height: 150),
-          PlayerProgressBar(viewManager: _viewManager),
-          PlayerControls(viewManager: _viewManager),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  AppColors.primaryColor,
+                  Colors.grey,
+                ],
+                transform: GradientRotation(10),
+              ),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Column(
+              children: [
+                PlayerProgressBar(viewManager: _viewManager),
+                PlayerControls(viewManager: _viewManager),
+              ],
+            ),
+          ),
         ],
       ),
     );
