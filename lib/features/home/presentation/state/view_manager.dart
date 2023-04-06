@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:stopify/constants/constants.dart';
+import 'package:stopify/features/home/presentation/notifiers/play_button_notifier.dart';
+import 'package:stopify/features/home/presentation/notifiers/progress_notifier.dart';
 
 class ViewManager {
+  final currentSongTitleNotifier = ValueNotifier<String>('');
+  final playlistNotifier = ValueNotifier<List<String>>([]);
+  final progressNotifier = ProgressNotifier();
+  final isFirstSongNotifier = ValueNotifier<bool>(true);
+  final playButtonNotifier = PlayButtonNotifier();
+  final isLastSongNotifier = ValueNotifier<bool>(true);
+
   late AudioPlayer _audioPlayer;
+  late ConcatenatingAudioSource _playlist;
 
   ViewManager() {
     _init();
