@@ -22,8 +22,19 @@ class CustomPlayer extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: 42),
-          Center(
-            child: CurrentSongTitle(viewManager: _viewManager),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.close),
+                color: AppColors.secondaryColor,
+              ),
+              const SizedBox(width: 100),
+              CurrentSongTitle(viewManager: _viewManager),
+            ],
           ),
           const SizedBox(height: 150),
           Container(
