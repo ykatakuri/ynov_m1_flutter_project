@@ -13,15 +13,15 @@ class PlayList extends StatelessWidget {
       height: Constants.playlistBoxHeight,
       width: MediaQuery.of(context).size.width,
       child: ListView.separated(
-        itemCount: playList.length,
+        itemCount: musics.length,
         itemBuilder: (context, index) {
           return ListTile(
             leading: const Icon(Icons.music_note),
             title: Text(
-              playList[index].title,
+              musics[index].title,
               style: const TextStyle(fontWeight: FontWeight.w700),
             ),
-            subtitle: Text(playList[index].artist),
+            subtitle: Text(musics[index].artist),
             trailing:
                 IconButton(icon: const Icon(Icons.download), onPressed: () {}),
           );

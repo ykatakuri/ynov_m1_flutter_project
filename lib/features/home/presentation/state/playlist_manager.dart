@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:stopify/features/home/data/datasources/dump_data.dart';
 import 'package:stopify/features/home/presentation/notifiers/play_button_notifier.dart';
 import 'package:stopify/features/home/presentation/notifiers/progress_notifier.dart';
 
-class ViewManager {
+class PlaylistManager {
   final currentSongTitleNotifier = ValueNotifier<String>('');
   final playlistNotifier = ValueNotifier<List<String>>([]);
   final progressNotifier = ProgressNotifier();
@@ -11,15 +12,15 @@ class ViewManager {
   final playButtonNotifier = PlayButtonNotifier();
   final isLastSongNotifier = ValueNotifier<bool>(true);
 
-  late AudioPlayer audioPlayer;
+  late AudioPlayer playlistAudioPlayer;
   late ConcatenatingAudioSource _playlist;
 
-  ViewManager() {
+  PlaylistManager() {
     init();
   }
 
   void init() async {
-    audioPlayer = AudioPlayer();
+    playlistAudioPlayer = AudioPlayer();
     setInitialPlaylist();
     listenForChangesInPlayerState();
     listenForChangesInPlayerPosition();
@@ -29,20 +30,12 @@ class ViewManager {
   }
 
   void setInitialPlaylist() async {
-    const prefix = 'https://www.soundhelix.com/examples/mp3';
-    final song1 = Uri.parse('$prefix/SoundHelix-Song-1.mp3');
-    final song2 = Uri.parse('$prefix/SoundHelix-Song-2.mp3');
-    final song3 = Uri.parse('$prefix/SoundHelix-Song-3.mp3');
-    _playlist = ConcatenatingAudioSource(children: [
-      AudioSource.uri(song1, tag: 'Song 1'),
-      AudioSource.uri(song2, tag: 'Song 2'),
-      AudioSource.uri(song3, tag: 'Song 3'),
-    ]);
-    await audioPlayer.setAudioSource(_playlist);
+    _playlist = playlist;
+    await playlistAudioPlayer.setAudioSource(_playlist);
   }
 
   void listenForChangesInPlayerState() {
-    audioPlayer.playerStateStream.listen((playerState) {
+    playlistAudioPlayer.playerStateStream.listen((playerState) {
       final isPlaying = playerState.playing;
       final processingState = playerState.processingState;
       if (processingState == ProcessingState.loading ||
@@ -53,14 +46,14 @@ class ViewManager {
       } else if (processingState != ProcessingState.completed) {
         playButtonNotifier.value = ButtonState.playing;
       } else {
-        audioPlayer.seek(Duration.zero);
-        audioPlayer.pause();
+        playlistAudioPlayer.seek(Duration.zero);
+        playlistAudioPlayer.pause();
       }
     });
   }
 
   void listenForChangesInPlayerPosition() {
-    audioPlayer.positionStream.listen((position) {
+    playlistAudioPlayer.positionStream.listen((position) {
       final oldState = progressNotifier.value;
       progressNotifier.value = ProgressBarState(
         current: position,
@@ -71,7 +64,7 @@ class ViewManager {
   }
 
   void listenForChangesInBufferedPosition() {
-    audioPlayer.bufferedPositionStream.listen((bufferedPosition) {
+    playlistAudioPlayer.bufferedPositionStream.listen((bufferedPosition) {
       final oldState = progressNotifier.value;
       progressNotifier.value = ProgressBarState(
         current: oldState.current,
@@ -82,7 +75,7 @@ class ViewManager {
   }
 
   void listenForChangesInTotalDuration() {
-    audioPlayer.durationStream.listen((totalDuration) {
+    playlistAudioPlayer.durationStream.listen((totalDuration) {
       final oldState = progressNotifier.value;
       progressNotifier.value = ProgressBarState(
         current: oldState.current,
@@ -93,7 +86,7 @@ class ViewManager {
   }
 
   void listenForChangesInSequenceState() {
-    audioPlayer.sequenceStateStream.listen((sequenceState) {
+    playlistAudioPlayer.sequenceStateStream.listen((sequenceState) {
       if (sequenceState == null) return;
 
       // update current song title
@@ -118,26 +111,26 @@ class ViewManager {
   }
 
   void play() {
-    audioPlayer.play();
+    playlistAudioPlayer.play();
   }
 
   void pause() {
-    audioPlayer.pause();
+    playlistAudioPlayer.pause();
   }
 
   void dispose() {
-    audioPlayer.dispose();
+    playlistAudioPlayer.dispose();
   }
 
   void seek(Duration position) {
-    audioPlayer.seek(position);
+    playlistAudioPlayer.seek(position);
   }
 
   void onPreviousSongButtonPressed() {
-    audioPlayer.seekToPrevious();
+    playlistAudioPlayer.seekToPrevious();
   }
 
   void onNextSongButtonPressed() {
-    audioPlayer.seekToNext();
+    playlistAudioPlayer.seekToNext();
   }
 }

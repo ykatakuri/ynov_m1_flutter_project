@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stopify/constants/app_colors.dart';
 import 'package:stopify/constants/constants.dart';
 import 'package:stopify/features/home/data/datasources/dump_data.dart';
-import 'package:stopify/features/home/presentation/state/view_manager.dart';
+import 'package:stopify/features/home/presentation/state/playlist_manager.dart';
 import 'package:stopify/features/home/presentation/widgets/custom_player.dart';
 import 'package:text_helpers/text_helpers.dart';
 
@@ -14,17 +14,19 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  late final ViewManager _viewManager;
+  late final PlaylistManager _playlistManager;
 
   @override
   void initState() {
-    _viewManager = ViewManager();
+    _playlistManager = PlaylistManager();
+
     super.initState();
   }
 
   @override
   void dispose() {
-    _viewManager.dispose();
+    _playlistManager.dispose();
+
     super.dispose();
   }
 
@@ -50,9 +52,32 @@ class _HomeViewState extends State<HomeView> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         shadowColor: AppColors.primaryColor,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: IconButton(
+              onPressed: () {
+                showModalBottomSheet<void>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: CustomPlayer(playlistManager: _playlistManager),
+                    );
+                  },
+                  isScrollControlled: true,
+                );
+              },
+              icon: const Icon(
+                Icons.play_circle_fill_rounded,
+              ),
+              iconSize: 45,
+            ),
+          ),
+        ],
       ),
       body: ListView.separated(
-        itemCount: playList.length,
+        itemCount: musics.length,
         itemBuilder: (context, index) {
           return Container(
             width: songContainerWidth,
@@ -89,7 +114,7 @@ class _HomeViewState extends State<HomeView> {
                         Container(
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: NetworkImage(playList[index].cover),
+                                image: NetworkImage(musics[index].cover),
                                 fit: BoxFit.cover),
                             borderRadius: BorderRadius.circular(8),
                           ),
@@ -110,7 +135,7 @@ class _HomeViewState extends State<HomeView> {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              playList[index].title,
+                              musics[index].title,
                               style: const TextStyle(
                                 color: AppColors.secondaryColor,
                                 fontWeight: FontWeight.bold,
@@ -118,7 +143,7 @@ class _HomeViewState extends State<HomeView> {
                             ),
                             const SizedBox(height: 8),
                             InlineText(
-                              playList[index].artist,
+                              musics[index].artist,
                               style: const TextStyle(
                                 color: Colors.white70,
                                 fontSize: 12,
@@ -136,7 +161,7 @@ class _HomeViewState extends State<HomeView> {
                         icon: const Icon(
                           Icons.add_circle_outline,
                         ),
-                        color: Colors.white70,
+                        color: AppColors.secondaryColor,
                         iconSize: 35,
                       ),
                       Expanded(child: Container()),
@@ -147,25 +172,7 @@ class _HomeViewState extends State<HomeView> {
                           fontSize: 10,
                         ),
                       ),
-                      IconButton(
-                        onPressed: () {
-                          showModalBottomSheet<void>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return SizedBox(
-                                height: MediaQuery.of(context).size.height,
-                                child: CustomPlayer(viewManager: _viewManager),
-                              );
-                            },
-                            isScrollControlled: true,
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.play_circle_fill_rounded,
-                        ),
-                        color: AppColors.secondaryColor,
-                        iconSize: 45,
-                      ),
+                      const SizedBox(width: 16),
                     ],
                   ),
                 ],

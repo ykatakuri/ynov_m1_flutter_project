@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:stopify/constants/app_colors.dart';
-import 'package:stopify/features/home/presentation/state/view_manager.dart';
+import 'package:stopify/features/home/presentation/state/playlist_manager.dart';
 import 'package:stopify/features/home/presentation/widgets/player_controls.dart';
 import 'package:stopify/features/home/presentation/widgets/player_progress_bar.dart';
-import 'package:text_helpers/text_helpers.dart';
 
 class CustomPlayer extends StatelessWidget {
   const CustomPlayer({
     super.key,
-    required ViewManager viewManager,
-  }) : _viewManager = viewManager;
+    required PlaylistManager playlistManager,
+  }) : _playlistManager = playlistManager;
 
-  final ViewManager _viewManager;
+  final PlaylistManager _playlistManager;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,7 @@ class CustomPlayer extends StatelessWidget {
                 color: AppColors.secondaryColor,
               ),
               const SizedBox(width: 100),
-              CurrentSongTitle(viewManager: _viewManager),
+              CurrentSongTitle(playlistManager: _playlistManager),
             ],
           ),
           const SizedBox(height: 150),
@@ -53,8 +52,8 @@ class CustomPlayer extends StatelessWidget {
             ),
             child: Column(
               children: [
-                PlayerProgressBar(viewManager: _viewManager),
-                PlayerControls(viewManager: _viewManager),
+                PlayerProgressBar(playlistManager: _playlistManager),
+                PlayerControls(playlistManager: _playlistManager),
               ],
             ),
           ),
@@ -66,26 +65,27 @@ class CustomPlayer extends StatelessWidget {
 
 class CurrentSongTitle extends StatelessWidget {
   const CurrentSongTitle({
-    required this.viewManager,
+    required this.playlistManager,
     Key? key,
   }) : super(key: key);
 
-  final ViewManager viewManager;
+  final PlaylistManager playlistManager;
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<String>(
-      valueListenable: viewManager.currentSongTitleNotifier,
+      valueListenable: playlistManager.currentSongTitleNotifier,
       builder: (_, title, __) {
         return Padding(
           padding: const EdgeInsets.only(top: 8.0),
-          child: InlineText(
+          child: Text(
             title,
             style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w700,
               color: AppColors.secondaryColor,
             ),
+            overflow: TextOverflow.ellipsis,
           ),
         );
       },

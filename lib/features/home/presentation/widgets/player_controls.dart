@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:stopify/constants/app_colors.dart';
 import 'package:stopify/constants/constants.dart';
 import 'package:stopify/features/home/presentation/notifiers/play_button_notifier.dart';
-import 'package:stopify/features/home/presentation/state/view_manager.dart';
+import 'package:stopify/features/home/presentation/state/playlist_manager.dart';
 import 'package:stopify/features/home/presentation/widgets/player_button.dart';
 
 class PlayerControls extends StatelessWidget {
   const PlayerControls({
     super.key,
-    required ViewManager viewManager,
-  }) : _viewManager = viewManager;
+    required PlaylistManager playlistManager,
+  }) : _playlistManager = playlistManager;
 
-  final ViewManager _viewManager;
+  final PlaylistManager _playlistManager;
 
   @override
   Widget build(BuildContext context) {
@@ -19,18 +19,19 @@ class PlayerControls extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         ValueListenableBuilder<bool>(
-          valueListenable: _viewManager.isFirstSongNotifier,
+          valueListenable: _playlistManager.isFirstSongNotifier,
           builder: (_, isFirst, __) {
             return PlayerButton(
               iconData: Icons.skip_previous,
               iconSize: Constants.previousAndNextIconSize,
-              onPressed:
-                  (isFirst) ? null : _viewManager.onPreviousSongButtonPressed,
+              onPressed: (isFirst)
+                  ? null
+                  : _playlistManager.onPreviousSongButtonPressed,
             );
           },
         ),
         ValueListenableBuilder<ButtonState>(
-          valueListenable: _viewManager.playButtonNotifier,
+          valueListenable: _playlistManager.playButtonNotifier,
           builder: (_, value, __) {
             switch (value) {
               case ButtonState.loading:
@@ -46,24 +47,25 @@ class PlayerControls extends StatelessWidget {
                 return PlayerButton(
                   iconData: Icons.play_circle_fill_rounded,
                   iconSize: Constants.playAndPauseIconSize,
-                  onPressed: _viewManager.play,
+                  onPressed: _playlistManager.play,
                 );
               case ButtonState.playing:
                 return PlayerButton(
                   iconData: Icons.pause_circle_outline_rounded,
                   iconSize: Constants.playAndPauseIconSize,
-                  onPressed: _viewManager.pause,
+                  onPressed: _playlistManager.pause,
                 );
             }
           },
         ),
         ValueListenableBuilder<bool>(
-          valueListenable: _viewManager.isLastSongNotifier,
+          valueListenable: _playlistManager.isLastSongNotifier,
           builder: (_, isLast, __) {
             return PlayerButton(
               iconData: Icons.skip_next,
               iconSize: Constants.previousAndNextIconSize,
-              onPressed: (isLast) ? null : _viewManager.onNextSongButtonPressed,
+              onPressed:
+                  (isLast) ? null : _playlistManager.onNextSongButtonPressed,
             );
           },
         ),
