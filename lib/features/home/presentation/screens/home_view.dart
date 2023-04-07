@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:stopify/constants/app_colors.dart';
 import 'package:stopify/constants/constants.dart';
 import 'package:stopify/features/home/data/datasources/dump_data.dart';
@@ -16,6 +19,38 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   late final PlaylistManager _playlistManager;
+
+  Future<Directory?>? _downloadsDirectory;
+
+  void _requestDownloadsDirectory() {
+    setState(() {
+      _downloadsDirectory = getDownloadsDirectory();
+    });
+  }
+
+  Widget _buildDirectory(
+      BuildContext context, AsyncSnapshot<Directory?> snapshot) {
+    Text text = const Text('');
+    if (snapshot.connectionState == ConnectionState.done) {
+      if (snapshot.hasError) {
+        text = Text(
+          'Error: ${snapshot.error}',
+          style: const TextStyle(color: AppColors.secondaryColor),
+        );
+      } else if (snapshot.hasData) {
+        text = Text(
+          'path: ${snapshot.data!.path}',
+          style: const TextStyle(color: AppColors.secondaryColor),
+        );
+      } else {
+        text = const Text(
+          'path unavailable',
+          style: TextStyle(color: AppColors.secondaryColor),
+        );
+      }
+    }
+    return Padding(padding: const EdgeInsets.all(16.0), child: text);
+  }
 
   @override
   void initState() {
@@ -171,14 +206,18 @@ class _HomeViewState extends State<HomeView> {
                   Row(
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: _requestDownloadsDirectory,
                         icon: const Icon(
                           Icons.add_circle_outline,
                         ),
                         color: AppColors.secondaryColor,
                         iconSize: 35,
                       ),
-                      Expanded(child: Container()),
+                      Expanded(
+                          child: FutureBuilder<Directory?>(
+                        future: _downloadsDirectory,
+                        builder: _buildDirectory,
+                      )),
                       const Text(
                         '1 titre.s',
                         style: TextStyle(
