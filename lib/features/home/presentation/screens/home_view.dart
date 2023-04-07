@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:stopify/constants/app_colors.dart';
 import 'package:stopify/constants/constants.dart';
@@ -111,15 +112,28 @@ class _HomeViewState extends State<HomeView> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(musics[index].cover),
-                                fit: BoxFit.cover),
-                            borderRadius: BorderRadius.circular(8),
+                        CachedNetworkImage(
+                          imageUrl: musics[index].cover.toString(),
+                          imageBuilder: (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: imageProvider, fit: BoxFit.cover),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            width: coverContainerWidth,
+                            height: coverContainerHeight,
                           ),
-                          width: coverContainerWidth,
-                          height: coverContainerHeight,
+                          placeholder: (context, url) => const SizedBox(
+                            width: coverContainerWidth,
+                            height: coverContainerHeight,
+                            child: CircularProgressIndicator(
+                                color: AppColors.secondaryColor),
+                          ),
+                          errorWidget: (context, url, error) => const SizedBox(
+                            width: coverContainerWidth,
+                            height: coverContainerHeight,
+                            child: Icon(Icons.error),
+                          ),
                         ),
                         const SizedBox(width: 16),
                         Column(
