@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:stopify/constants/app_colors.dart';
+import 'package:stopify/features/home/data/datasources/dump_data.dart';
 import 'package:stopify/features/home/presentation/state/playlist_manager.dart';
+import 'package:stopify/features/home/presentation/widgets/download_button/download_button.dart';
 
-class PlayListContainer extends StatelessWidget {
+class PlayListContainer extends StatefulWidget {
   const PlayListContainer({
     super.key,
     required this.mediaQuerySize,
@@ -13,48 +15,198 @@ class PlayListContainer extends StatelessWidget {
   final PlaylistManager playlistManager;
 
   @override
+  State<PlayListContainer> createState() => _PlayListContainerState();
+}
+
+class _PlayListContainerState extends State<PlayListContainer> {
+  late final List<DownloadController> _downloadControllers;
+
+  @override
+  void initState() {
+    super.initState();
+    _downloadControllers = List<DownloadController>.generate(
+      playlist.length,
+      (index) => SimulatedDownloadController(onOpenDownload: () {
+        _openDownload(index);
+      }),
+    );
+  }
+
+  void _openDownload(int index) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          'Musique disponible dans la bibliothèque',
+        ),
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: mediaQuerySize.height / 2,
+      height: widget.mediaQuerySize.height / 2,
       child: ValueListenableBuilder(
-        valueListenable: playlistManager.playlistNotifier,
-        builder: (context, playlistTitles, _) {
-          return ListView.separated(
-            itemBuilder: (context, index) {
-              return ListTile(
-                leading: Text(
-                  '${index + 1}',
-                  style: const TextStyle(
-                    color: Colors.white70,
-                  ),
-                ),
-                title: Text(
-                  playlistTitles[index],
-                  style: const TextStyle(
-                    color: AppColors.secondaryColor,
-                    fontSize: 14,
-                  ),
-                ),
-                trailing: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.download),
-                  color: Colors.white70,
-                ),
-              );
-            },
-            separatorBuilder: (context, index) {
-              return const Padding(
+          valueListenable: widget.playlistManager.playlistNotifier,
+          builder: (context, playlistTitles, _) {
+            return ListView.separated(
+              itemBuilder: (context, index) {
+                return _buildListItem(context, index, playlistTitles[index]);
+              },
+              separatorBuilder: (_, __) => const Padding(
                 padding: EdgeInsets.only(left: 32),
                 child: Divider(
                   height: 1,
                   color: Colors.white70,
                 ),
-              );
-            },
-            itemCount: playlistTitles.length,
-          );
-        },
+              ),
+              itemCount: playlistTitles.length,
+            );
+          }),
+    );
+  }
+
+  Widget _buildListItem(BuildContext context, int index, String title) {
+    final downloadController = _downloadControllers[index];
+
+    return ListTile(
+      leading: Text(
+        '${index + 1}',
+        style: const TextStyle(
+          color: Colors.white70,
+        ),
+      ),
+      title: Text(
+        title,
+        style: const TextStyle(
+          color: AppColors.secondaryColor,
+          fontSize: 14,
+        ),
+      ),
+      trailing: SizedBox(
+        width: 96,
+        child: AnimatedBuilder(
+          animation: downloadController,
+          builder: (context, child) {
+            return DownloadButton(
+              status: downloadController.downloadStatus,
+              downloadProgress: downloadController.progress,
+              onDownload: downloadController.startDownload,
+              onCancel: downloadController.stopDownload,
+              onOpen: downloadController.openDownload,
+            );
+          },
+        ),
       ),
     );
+  }
+}
+
+enum DownloadStatus {
+  notDownloaded,
+  fetchingDownload,
+  downloading,
+  downloaded,
+}
+
+abstract class DownloadController implements ChangeNotifier {
+  DownloadStatus get downloadStatus;
+  double get progress;
+
+  void startDownload();
+  void stopDownload();
+  void openDownload();
+}
+
+class SimulatedDownloadController extends DownloadController
+    with ChangeNotifier {
+  SimulatedDownloadController({
+    DownloadStatus downloadStatus = DownloadStatus.notDownloaded,
+    double progress = 0.0,
+    required VoidCallback onOpenDownload,
+  })  : _downloadStatus = downloadStatus,
+        _progress = progress,
+        _onOpenDownload = onOpenDownload;
+
+  DownloadStatus _downloadStatus;
+  @override
+  DownloadStatus get downloadStatus => _downloadStatus;
+
+  double _progress;
+  @override
+  double get progress => _progress;
+
+  final VoidCallback _onOpenDownload;
+
+  bool _isDownloading = false;
+
+  @override
+  void startDownload() {
+    if (downloadStatus == DownloadStatus.notDownloaded) {
+      _doSimulatedDownload();
+
+      //TODO: Write the file into Download directory with path provider
+    }
+  }
+
+  @override
+  void stopDownload() {
+    if (_isDownloading) {
+      _isDownloading = false;
+      _downloadStatus = DownloadStatus.notDownloaded;
+      _progress = 0.0;
+      notifyListeners();
+    }
+  }
+
+  @override
+  void openDownload() {
+    if (downloadStatus == DownloadStatus.downloaded) {
+      _onOpenDownload();
+    }
+  }
+
+  Future<void> _doSimulatedDownload() async {
+    _isDownloading = true;
+    _downloadStatus = DownloadStatus.fetchingDownload;
+    notifyListeners();
+
+    await Future<void>.delayed(const Duration(seconds: 1));
+
+    if (!_isDownloading) {
+      return;
+    }
+
+    // Shift to the downloading phase.
+    _downloadStatus = DownloadStatus.downloading;
+    notifyListeners();
+
+    const downloadProgressStops = [0.0, 0.15, 0.45, 0.8, 1.0];
+    for (final stop in downloadProgressStops) {
+      // Wait a second to simulate varying download speeds.
+      await Future<void>.delayed(const Duration(seconds: 1));
+
+      // If the user chose to cancel the download, stop the simulation.
+      if (!_isDownloading) {
+        return;
+      }
+
+      // Update the download progress.
+      _progress = stop;
+      notifyListeners();
+    }
+
+    // Wait a second to simulate a final delay.
+    await Future<void>.delayed(const Duration(seconds: 1));
+
+    // If the user chose to cancel the download, stop the simulation.
+    if (!_isDownloading) {
+      return;
+    }
+
+    // Shift to the downloaded state, completing the simulation.
+    _downloadStatus = DownloadStatus.downloaded;
+    _isDownloading = false;
+    notifyListeners();
   }
 }
