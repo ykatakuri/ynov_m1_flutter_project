@@ -17,4 +17,7 @@ class Constants {
   static const radioText = 'Radio';
   static double tabBarIconSize = 35;
   static double labelFontSize = 12;
+
+  // Cover URL
+  static const coverURL = 'https://i.postimg.cc/RFh9WWWw/cover.png';
 }

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:stopify/constants/app_colors.dart';
+import 'package:stopify/constants/constants.dart';
 
 class HeroCover extends StatelessWidget {
   const HeroCover({
@@ -15,8 +16,7 @@ class HeroCover extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      imageUrl:
-          'https://d1csarkz8obe9u.cloudfront.net/themedlandingpages/tlp_hero_album-cover-art-588174bffe0bcb491737d700db8e77df-1554161328.jpg',
+      imageUrl: Constants.coverURL,
       imageBuilder: (context, imageProvider) => Container(
         decoration: BoxDecoration(
           image: DecorationImage(
