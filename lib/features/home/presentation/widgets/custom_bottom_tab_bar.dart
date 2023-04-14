@@ -15,17 +15,17 @@ class CustomBottomTabBar extends StatelessWidget {
         tabs: [
           Tab(
             icon: Icon(
-              Icons.home,
+              Icons.play_circle,
               size: Constants.tabBarIconSize,
             ),
-            text: Constants.homeText,
+            text: Constants.listenText,
           ),
           Tab(
             icon: Icon(
-              Icons.search,
+              Icons.sensors,
               size: Constants.tabBarIconSize,
             ),
-            text: Constants.searchText,
+            text: Constants.radioText,
           ),
           Tab(
             icon: Icon(
@@ -36,10 +36,10 @@ class CustomBottomTabBar extends StatelessWidget {
           ),
           Tab(
             icon: Icon(
-              Icons.live_tv,
+              Icons.search,
               size: Constants.tabBarIconSize,
             ),
-            text: Constants.liveText,
+            text: Constants.searchText,
           ),
         ],
         labelColor: AppColors.secondaryColor,

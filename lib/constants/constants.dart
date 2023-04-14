@@ -11,10 +11,10 @@ class Constants {
   static double playlistBoxHeight = 300;
 
   // Tab bar
-  static const homeText = 'Accueil';
+  static const listenText = 'Écouter';
   static const searchText = 'Recherche';
   static const libraryText = 'Bibliothèque';
-  static const liveText = 'Live';
+  static const radioText = 'Radio';
   static double tabBarIconSize = 35;
   static double labelFontSize = 12;
 }

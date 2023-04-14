@@ -13,9 +13,9 @@ class HomeScreen extends StatelessWidget {
       body: TabBarView(
         children: [
           HomeView(),
-          Icon(Icons.search),
+          Icon(Icons.sensors),
           Icon(Icons.library_music),
-          Icon(Icons.live_tv),
+          Icon(Icons.search),
         ],
       ),
       bottomNavigationBar: CustomBottomTabBar(),
