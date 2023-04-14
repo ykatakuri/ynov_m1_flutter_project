@@ -54,7 +54,7 @@ class HomeViewHero extends StatelessWidget {
                   Icons.shuffle,
                 ),
                 text: 'Aléatoire',
-                onPressed: () {},
+                onPressed: playlistManager.onShuffleButtonPressed,
               ),
             ],
           ),

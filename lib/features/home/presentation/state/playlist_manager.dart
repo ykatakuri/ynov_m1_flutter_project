@@ -11,6 +11,7 @@ class PlaylistManager {
   final isFirstSongNotifier = ValueNotifier<bool>(true);
   final playButtonNotifier = PlayButtonNotifier();
   final isLastSongNotifier = ValueNotifier<bool>(true);
+  final isShuffleModeEnabledNotifier = ValueNotifier<bool>(false);
 
   late AudioPlayer playlistAudioPlayer;
   late ConcatenatingAudioSource _playlist;
@@ -99,6 +100,9 @@ class PlaylistManager {
       final titles = playlist.map((item) => item.tag as String).toList();
       playlistNotifier.value = titles;
 
+      // update shuffle mode
+      isShuffleModeEnabledNotifier.value = sequenceState.shuffleModeEnabled;
+
       // update previous and next buttons
       if (playlist.isEmpty || currentItem == null) {
         isFirstSongNotifier.value = true;
@@ -132,5 +136,13 @@ class PlaylistManager {
 
   void onNextSongButtonPressed() {
     playlistAudioPlayer.seekToNext();
+  }
+
+  void onShuffleButtonPressed() async {
+    final enable = !playlistAudioPlayer.shuffleModeEnabled;
+    if (enable) {
+      await playlistAudioPlayer.shuffle();
+    }
+    await playlistAudioPlayer.setShuffleModeEnabled(enable);
   }
 }
