@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stopify/constants/app_colors.dart';
 import 'package:stopify/features/home/presentation/state/playlist_manager.dart';
-import 'package:stopify/features/home/presentation/widgets/player_controls.dart';
-import 'package:stopify/features/home/presentation/widgets/player_progress_bar.dart';
+import 'package:stopify/features/home/presentation/widgets/custom_player/player_controls.dart';
+import 'package:stopify/features/home/presentation/widgets/custom_player/player_progress_bar.dart';
 
 class CustomPlayer extends StatelessWidget {
   const CustomPlayer({

@@ -7,7 +7,7 @@ import 'package:stopify/constants/app_colors.dart';
 import 'package:stopify/constants/constants.dart';
 import 'package:stopify/features/home/data/datasources/dump_data.dart';
 import 'package:stopify/features/home/presentation/state/playlist_manager.dart';
-import 'package:stopify/features/home/presentation/widgets/custom_player.dart';
+import 'package:stopify/features/home/presentation/widgets/custom_player/custom_player.dart';
 import 'package:text_helpers/text_helpers.dart';
 
 class HomeView extends StatefulWidget {

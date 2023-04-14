@@ -3,7 +3,7 @@ import 'package:stopify/constants/app_colors.dart';
 import 'package:stopify/constants/constants.dart';
 import 'package:stopify/features/home/presentation/notifiers/play_button_notifier.dart';
 import 'package:stopify/features/home/presentation/state/playlist_manager.dart';
-import 'package:stopify/features/home/presentation/widgets/player_button.dart';
+import 'package:stopify/features/home/presentation/widgets/custom_player/player_button.dart';
 
 class PlayerControls extends StatelessWidget {
   const PlayerControls({

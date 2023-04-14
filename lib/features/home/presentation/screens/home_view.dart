@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:stopify/constants/app_colors.dart';
 import 'package:stopify/constants/constants.dart';
 import 'package:stopify/features/home/presentation/state/playlist_manager.dart';
-import 'package:stopify/features/home/presentation/widgets/floating_player.dart';
-import 'package:stopify/features/home/presentation/widgets/home_view_hero.dart';
+import 'package:stopify/features/home/presentation/widgets/floating_player/floating_player.dart';
+import 'package:stopify/features/home/presentation/widgets/hero/home_view_hero.dart';
 import 'package:stopify/features/home/presentation/widgets/home_view_playlist_container.dart';
 
 class HomeView extends StatefulWidget {
