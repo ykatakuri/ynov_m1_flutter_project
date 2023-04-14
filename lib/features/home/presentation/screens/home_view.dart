@@ -92,7 +92,10 @@ class _HomeViewState extends State<HomeView> {
             coverContainerHeight: coverContainerHeight,
             playlistManager: _playlistManager,
           ),
-          PlayListContainer(mediaQuerySize: mediaQuerySize),
+          PlayListContainer(
+            mediaQuerySize: mediaQuerySize,
+            playlistManager: _playlistManager,
+          ),
         ],
       ),
       floatingActionButton: FloatingPlayer(
