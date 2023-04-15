@@ -7,13 +7,11 @@ import 'package:stopify/features/home/presentation/widgets/hero/hero_cover.dart'
 class HomeViewHero extends StatelessWidget {
   const HomeViewHero({
     super.key,
-    required this.heroContainerHeight,
     required this.coverContainerWidth,
     required this.coverContainerHeight,
     required this.playlistManager,
   });
 
-  final double heroContainerHeight;
   final double coverContainerWidth;
   final double coverContainerHeight;
 
@@ -22,15 +20,14 @@ class HomeViewHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: heroContainerHeight,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           const SizedBox(height: 10),
           HeroCover(
             coverContainerWidth: coverContainerWidth,
             coverContainerHeight: coverContainerHeight,
           ),
+          const SizedBox(height: 10),
           const Text(
             'Playlist',
             style: TextStyle(
@@ -39,6 +36,7 @@ class HomeViewHero extends StatelessWidget {
               fontSize: 20,
             ),
           ),
+          const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [

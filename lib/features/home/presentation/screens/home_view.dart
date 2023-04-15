@@ -64,8 +64,6 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuerySize = MediaQuery.of(context).size;
-    final heroContainerHeight = mediaQuerySize.height / 2;
     const double coverContainerWidth = 230;
     const double coverContainerHeight = 230;
 
@@ -87,13 +85,11 @@ class _HomeViewState extends State<HomeView> {
       body: ListView(
         children: [
           HomeViewHero(
-            heroContainerHeight: heroContainerHeight,
             coverContainerWidth: coverContainerWidth,
             coverContainerHeight: coverContainerHeight,
             playlistManager: _playlistManager,
           ),
           PlayListContainer(
-            mediaQuerySize: mediaQuerySize,
             playlistManager: _playlistManager,
           ),
         ],

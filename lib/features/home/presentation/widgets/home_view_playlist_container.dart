@@ -11,11 +11,9 @@ import 'package:uuid/uuid.dart';
 class PlayListContainer extends StatefulWidget {
   const PlayListContainer({
     super.key,
-    required this.mediaQuerySize,
     required this.playlistManager,
   });
 
-  final Size mediaQuerySize;
   final PlaylistManager playlistManager;
 
   @override
@@ -48,27 +46,20 @@ class _PlayListContainerState extends State<PlayListContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: widget.mediaQuerySize.height / 2,
+    return Expanded(
       child: ValueListenableBuilder(
           valueListenable: widget.playlistManager.playlistNotifier,
           builder: (context, playlists, _) {
-            return ListView.separated(
-              itemBuilder: (context, index) {
-                // print('Playlist item 1: ${playlists[index].item1}');
-                // print('Playlist item 2: ${playlists[index].item2}');
-
-                return _buildListItem(context, index, playlists[index].item1,
-                    playlists[index].item2);
-              },
-              separatorBuilder: (_, __) => const Padding(
-                padding: EdgeInsets.only(left: 32),
-                child: Divider(
-                  height: 1,
-                  color: Colors.white70,
-                ),
-              ),
-              itemCount: playlists.length,
+            return Column(
+              children: [
+                for (var playlist in playlists)
+                  _buildListItem(
+                    context,
+                    playlists.indexOf(playlist),
+                    playlist.item1,
+                    playlist.item2,
+                  ),
+              ],
             );
           }),
     );
@@ -78,35 +69,46 @@ class _PlayListContainerState extends State<PlayListContainer> {
       BuildContext context, int index, String trackUrl, String title) {
     final downloadController = _downloadControllers[index];
 
-    return ListTile(
-      leading: Text(
-        '${index + 1}',
-        style: const TextStyle(
-          color: Colors.white70,
+    return Column(
+      children: [
+        ListTile(
+          leading: Text(
+            '${index + 1}',
+            style: const TextStyle(
+              color: Colors.white70,
+            ),
+          ),
+          title: Text(
+            title,
+            style: const TextStyle(
+              color: AppColors.secondaryColor,
+              fontSize: 14,
+            ),
+          ),
+          trailing: SizedBox(
+            width: 96,
+            child: AnimatedBuilder(
+              animation: downloadController,
+              builder: (context, child) {
+                return DownloadButton(
+                  status: downloadController.downloadStatus,
+                  downloadProgress: downloadController.progress,
+                  onDownload: () => downloadController.startDownload(trackUrl),
+                  onCancel: downloadController.stopDownload,
+                  onOpen: downloadController.openDownload,
+                );
+              },
+            ),
+          ),
         ),
-      ),
-      title: Text(
-        title,
-        style: const TextStyle(
-          color: AppColors.secondaryColor,
-          fontSize: 14,
+        const Padding(
+          padding: EdgeInsets.only(left: 32),
+          child: Divider(
+            height: 1,
+            color: Colors.white70,
+          ),
         ),
-      ),
-      trailing: SizedBox(
-        width: 96,
-        child: AnimatedBuilder(
-          animation: downloadController,
-          builder: (context, child) {
-            return DownloadButton(
-              status: downloadController.downloadStatus,
-              downloadProgress: downloadController.progress,
-              onDownload: () => downloadController.startDownload(trackUrl),
-              onCancel: downloadController.stopDownload,
-              onOpen: downloadController.openDownload,
-            );
-          },
-        ),
-      ),
+      ],
     );
   }
 }
