@@ -8,8 +8,6 @@ class Constants {
   static const radioUrl =
       'https://listen.radioking.com/radio/242578/stream/286663';
 
-  static double playlistBoxHeight = 300;
-
   // Tab bar
   static const listenText = 'Écouter';
   static const searchText = 'Recherche';

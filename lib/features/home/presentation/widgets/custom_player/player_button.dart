@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stopify/constants/app_colors.dart';
 
 class PlayerButton extends StatelessWidget {
   const PlayerButton({
@@ -18,7 +17,7 @@ class PlayerButton extends StatelessWidget {
     return IconButton(
       icon: Icon(iconData),
       iconSize: iconSize,
-      color: AppColors.secondaryColor,
+      color: Colors.white,
       onPressed: onPressed,
     );
   }

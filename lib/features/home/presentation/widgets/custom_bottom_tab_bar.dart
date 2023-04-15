@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stopify/constants/app_colors.dart';
 import 'package:stopify/constants/constants.dart';
 
 class CustomBottomTabBar extends StatelessWidget {
@@ -10,7 +9,7 @@ class CustomBottomTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
-      color: AppColors.primaryColor,
+      color: Colors.black,
       child: TabBar(
         tabs: [
           Tab(
@@ -42,9 +41,9 @@ class CustomBottomTabBar extends StatelessWidget {
             text: Constants.searchText,
           ),
         ],
-        labelColor: AppColors.secondaryColor,
+        labelColor: Colors.white,
         unselectedLabelColor: Colors.grey,
-        indicatorColor: AppColors.secondaryColor,
+        indicatorColor: Colors.white,
         labelStyle: TextStyle(fontSize: Constants.labelFontSize),
         labelPadding: const EdgeInsets.symmetric(horizontal: 0),
       ),

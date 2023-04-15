@@ -35,17 +35,17 @@
 //       if (snapshot.hasError) {
 //         text = Text(
 //           'Error: ${snapshot.error}',
-//           style: const TextStyle(color: AppColors.secondaryColor),
+//           style: const TextStyle(color: Colors.white),
 //         );
 //       } else if (snapshot.hasData) {
 //         text = Text(
 //           'path: ${snapshot.data!.path}',
-//           style: const TextStyle(color: AppColors.secondaryColor),
+//           style: const TextStyle(color: Colors.white),
 //         );
 //       } else {
 //         text = const Text(
 //           'path unavailable',
-//           style: TextStyle(color: AppColors.secondaryColor),
+//           style: TextStyle(color: Colors.white),
 //         );
 //       }
 //     }
@@ -75,7 +75,7 @@
 //     const double coverContainerHeight = 150;
 
 //     return Scaffold(
-//       backgroundColor: AppColors.primaryColor,
+//       backgroundColor: Colors.black,
 //       appBar: AppBar(
 //         centerTitle: false,
 //         leadingWidth: 0,
@@ -83,11 +83,11 @@
 //         titleTextStyle: const TextStyle(
 //           fontSize: 30,
 //           fontWeight: FontWeight.w700,
-//           color: AppColors.secondaryColor,
+//           color: Colors.white,
 //         ),
 //         backgroundColor: Colors.transparent,
 //         elevation: 0,
-//         shadowColor: AppColors.primaryColor,
+//         shadowColor: Colors.black,
 //         actions: [
 //           Padding(
 //             padding: const EdgeInsets.only(right: 8.0),
@@ -128,7 +128,7 @@
 //                 begin: Alignment.topLeft,
 //                 end: Alignment.bottomRight,
 //                 colors: [
-//                   AppColors.primaryColor,
+//                   Colors.black,
 //                   Colors.grey,
 //                 ],
 //                 transform: GradientRotation(10),
@@ -162,7 +162,7 @@
 //                             width: coverContainerWidth,
 //                             height: coverContainerHeight,
 //                             child: CircularProgressIndicator(
-//                                 color: AppColors.secondaryColor),
+//                                 color: Colors.white),
 //                           ),
 //                           errorWidget: (context, url, error) => const SizedBox(
 //                             width: coverContainerWidth,
@@ -186,7 +186,7 @@
 //                             Text(
 //                               musics[index].title,
 //                               style: const TextStyle(
-//                                 color: AppColors.secondaryColor,
+//                                 color: Colors.white,
 //                                 fontWeight: FontWeight.bold,
 //                               ),
 //                             ),
@@ -210,7 +210,7 @@
 //                         icon: const Icon(
 //                           Icons.add_circle_outline,
 //                         ),
-//                         color: AppColors.secondaryColor,
+//                         color: Colors.white,
 //                         iconSize: 35,
 //                       ),
 //                       Expanded(

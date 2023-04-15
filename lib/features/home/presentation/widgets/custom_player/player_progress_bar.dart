@@ -1,6 +1,5 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:stopify/constants/app_colors.dart';
 import 'package:stopify/features/home/presentation/notifiers/progress_notifier.dart';
 import 'package:stopify/features/home/presentation/state/playlist_manager.dart';
 
@@ -24,11 +23,11 @@ class PlayerProgressBar extends StatelessWidget {
             total: value.total,
             buffered: value.buffered,
             onSeek: _playlistManager.seek,
-            baseBarColor: AppColors.secondaryColor,
-            progressBarColor: AppColors.progressBarColor,
-            thumbColor: AppColors.progressBarColor,
+            baseBarColor: Colors.white,
+            progressBarColor: Colors.amber,
+            thumbColor: Colors.amber,
             timeLabelTextStyle: const TextStyle(
-              color: AppColors.secondaryColor,
+              color: Colors.white,
               fontWeight: FontWeight.w700,
             ),
           );

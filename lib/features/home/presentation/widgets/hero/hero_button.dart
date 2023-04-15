@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stopify/constants/app_colors.dart';
 
 class HeroButton extends StatelessWidget {
   const HeroButton({
@@ -16,10 +15,10 @@ class HeroButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var buttonStyle = ElevatedButton.styleFrom(
-      backgroundColor: AppColors.secondaryColor,
-      foregroundColor: AppColors.primaryColor,
+      backgroundColor: Colors.white,
+      foregroundColor: Colors.black,
       textStyle: const TextStyle(
-        color: AppColors.primaryColor,
+        color: Colors.black,
         fontWeight: FontWeight.w600,
       ),
       minimumSize: const Size(150, 40),

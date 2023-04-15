@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stopify/constants/app_colors.dart';
 import 'package:stopify/features/home/presentation/state/playlist_manager.dart';
 import 'package:stopify/features/home/presentation/widgets/custom_player/player_controls.dart';
 import 'package:stopify/features/home/presentation/widgets/custom_player/player_progress_bar.dart';
@@ -29,7 +28,7 @@ class CustomPlayer extends StatelessWidget {
                   Navigator.pop(context);
                 },
                 icon: const Icon(Icons.close),
-                color: AppColors.secondaryColor,
+                color: Colors.white,
               ),
               const SizedBox(width: 100),
               CurrentSongTitle(playlistManager: _playlistManager),
@@ -43,7 +42,7 @@ class CustomPlayer extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  AppColors.primaryColor,
+                  Colors.black,
                   Colors.grey,
                 ],
                 transform: GradientRotation(10),
@@ -83,7 +82,7 @@ class CurrentSongTitle extends StatelessWidget {
             style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w700,
-              color: AppColors.secondaryColor,
+              color: Colors.white,
             ),
             overflow: TextOverflow.ellipsis,
           ),

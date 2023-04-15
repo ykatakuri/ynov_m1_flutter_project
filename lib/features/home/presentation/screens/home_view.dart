@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stopify/constants/app_colors.dart';
 import 'package:stopify/constants/constants.dart';
 import 'package:stopify/features/home/presentation/state/playlist_manager.dart';
 import 'package:stopify/features/home/presentation/widgets/floating_player/floating_player.dart';
@@ -15,38 +14,6 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   late final PlaylistManager _playlistManager;
-
-  // Future<Directory?>? _downloadsDirectory;
-
-  // void _requestDownloadsDirectory() {
-  //   setState(() {
-  //     _downloadsDirectory = getDownloadsDirectory();
-  //   });
-  // }
-
-  // Widget _buildDirectory(
-  //     BuildContext context, AsyncSnapshot<Directory?> snapshot) {
-  //   Text text = const Text('');
-  //   if (snapshot.connectionState == ConnectionState.done) {
-  //     if (snapshot.hasError) {
-  //       text = Text(
-  //         'Error: ${snapshot.error}',
-  //         style: const TextStyle(color: AppColors.secondaryColor),
-  //       );
-  //     } else if (snapshot.hasData) {
-  //       text = Text(
-  //         'path: ${snapshot.data!.path}',
-  //         style: const TextStyle(color: AppColors.secondaryColor),
-  //       );
-  //     } else {
-  //       text = const Text(
-  //         'path unavailable',
-  //         style: TextStyle(color: AppColors.secondaryColor),
-  //       );
-  //     }
-  //   }
-  //   return Padding(padding: const EdgeInsets.all(16.0), child: text);
-  // }
 
   @override
   void initState() {
@@ -68,7 +35,7 @@ class _HomeViewState extends State<HomeView> {
     const double coverContainerHeight = 230;
 
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Colors.black,
       appBar: AppBar(
         centerTitle: false,
         leadingWidth: 0,
@@ -76,11 +43,11 @@ class _HomeViewState extends State<HomeView> {
         titleTextStyle: const TextStyle(
           fontSize: 30,
           fontWeight: FontWeight.w700,
-          color: AppColors.secondaryColor,
+          color: Colors.white,
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        shadowColor: AppColors.primaryColor,
+        shadowColor: Colors.black,
       ),
       body: ListView(
         children: [

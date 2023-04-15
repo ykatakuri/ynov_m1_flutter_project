@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stopify/constants/app_colors.dart';
 import 'package:stopify/constants/constants.dart';
 import 'package:stopify/features/home/presentation/notifiers/play_button_notifier.dart';
 import 'package:stopify/features/home/presentation/state/playlist_manager.dart';
@@ -40,7 +39,7 @@ class PlayerControls extends StatelessWidget {
                   width: 32.0,
                   height: 32.0,
                   child: const CircularProgressIndicator(
-                    color: AppColors.secondaryColor,
+                    color: Colors.white,
                   ),
                 );
               case ButtonState.paused:

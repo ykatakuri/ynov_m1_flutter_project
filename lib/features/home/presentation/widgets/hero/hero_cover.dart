@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:stopify/constants/app_colors.dart';
 import 'package:stopify/constants/constants.dart';
 
 class HeroCover extends StatelessWidget {
@@ -32,7 +31,7 @@ class HeroCover extends StatelessWidget {
         width: coverContainerWidth,
         height: coverContainerHeight,
         child: const CircularProgressIndicator(
-          color: AppColors.secondaryColor,
+          color: Colors.white,
         ),
       ),
       errorWidget: (context, url, error) => SizedBox(

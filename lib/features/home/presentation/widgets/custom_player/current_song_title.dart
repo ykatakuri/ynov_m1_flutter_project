@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stopify/constants/app_colors.dart';
 import 'package:stopify/features/home/presentation/state/playlist_manager.dart';
 
 class CurrentSongTitle extends StatelessWidget {
@@ -21,7 +20,7 @@ class CurrentSongTitle extends StatelessWidget {
           style: const TextStyle(
             fontSize: fontSize,
             fontWeight: FontWeight.w500,
-            color: AppColors.secondaryColor,
+            color: Colors.white,
           ),
           overflow: TextOverflow.ellipsis,
         );
