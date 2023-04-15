@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:stopify/constants/app_colors.dart';
-import 'package:stopify/features/home/data/datasources/dump_data.dart';
-import 'package:stopify/features/home/presentation/state/view_manager.dart';
+import 'package:stopify/constants/constants.dart';
+import 'package:stopify/features/home/presentation/state/playlist_manager.dart';
+import 'package:stopify/features/home/presentation/widgets/floating_player/floating_player.dart';
+import 'package:stopify/features/home/presentation/widgets/hero/home_view_hero.dart';
+import 'package:stopify/features/home/presentation/widgets/home_view_playlist_container.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -11,43 +14,90 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  late final ViewManager _viewManager;
+  late final PlaylistManager _playlistManager;
+
+  // Future<Directory?>? _downloadsDirectory;
+
+  // void _requestDownloadsDirectory() {
+  //   setState(() {
+  //     _downloadsDirectory = getDownloadsDirectory();
+  //   });
+  // }
+
+  // Widget _buildDirectory(
+  //     BuildContext context, AsyncSnapshot<Directory?> snapshot) {
+  //   Text text = const Text('');
+  //   if (snapshot.connectionState == ConnectionState.done) {
+  //     if (snapshot.hasError) {
+  //       text = Text(
+  //         'Error: ${snapshot.error}',
+  //         style: const TextStyle(color: AppColors.secondaryColor),
+  //       );
+  //     } else if (snapshot.hasData) {
+  //       text = Text(
+  //         'path: ${snapshot.data!.path}',
+  //         style: const TextStyle(color: AppColors.secondaryColor),
+  //       );
+  //     } else {
+  //       text = const Text(
+  //         'path unavailable',
+  //         style: TextStyle(color: AppColors.secondaryColor),
+  //       );
+  //     }
+  //   }
+  //   return Padding(padding: const EdgeInsets.all(16.0), child: text);
+  // }
 
   @override
   void initState() {
-    _viewManager = ViewManager();
+    _playlistManager = PlaylistManager();
+
     super.initState();
   }
 
   @override
   void dispose() {
-    _viewManager.dispose();
+    _playlistManager.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    const double coverContainerWidth = 230;
+    const double coverContainerHeight = 230;
+
     return Scaffold(
-      body: ListView.separated(
-        itemCount: playList.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            leading: const Icon(Icons.music_note),
-            title: Text(
-              playList[index].title,
-              style: const TextStyle(fontWeight: FontWeight.w700),
-            ),
-            subtitle: Text(playList[index].artist),
-            trailing: IconButton(
-                icon: const Icon(
-                  Icons.download_for_offline,
-                  color: AppColors.primaryColor,
-                ),
-                onPressed: () {}),
-          );
-        },
-        separatorBuilder: (context, index) => const Divider(thickness: 3),
+      backgroundColor: AppColors.primaryColor,
+      appBar: AppBar(
+        centerTitle: false,
+        leadingWidth: 0,
+        title: const Text(Constants.appName),
+        titleTextStyle: const TextStyle(
+          fontSize: 30,
+          fontWeight: FontWeight.w700,
+          color: AppColors.secondaryColor,
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        shadowColor: AppColors.primaryColor,
       ),
+      body: ListView(
+        children: [
+          HomeViewHero(
+            coverContainerWidth: coverContainerWidth,
+            coverContainerHeight: coverContainerHeight,
+            playlistManager: _playlistManager,
+          ),
+          PlayListContainer(
+            playlistManager: _playlistManager,
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingPlayer(
+        playlistManager: _playlistManager,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
     );
   }
 }

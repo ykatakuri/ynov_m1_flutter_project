@@ -16,11 +16,15 @@ class MyApp extends StatelessWidget {
       title: Constants.appName,
       theme: ThemeData(
         primaryColor: AppColors.primaryColor,
+        bottomSheetTheme: BottomSheetThemeData(
+          backgroundColor: Colors.black.withOpacity(0.7),
+        ),
       ),
       home: const DefaultTabController(
         length: Constants.tabBarLength,
         child: HomeScreen(),
       ),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

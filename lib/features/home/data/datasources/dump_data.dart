@@ -1,81 +1,28 @@
-import 'package:stopify/features/home/data/models/music_model.dart';
-import 'package:uuid/uuid.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:tuple/tuple.dart';
 
-// Generate an unique id
-var uuid = const Uuid();
-var uid = uuid.v1();
+const prefix = 'https://www.soundhelix.com/examples/mp3';
 
-const userId = 1;
+List<Tuple2<String, String>> generateSongsList() {
+  return List<Tuple2<String, String>>.generate(20, (index) {
+    int songNumber = index + 1;
+    String songUrl = '$prefix/SoundHelix-Song-$songNumber.mp3';
+    String songTitle = 'Song $songNumber';
+    return Tuple2<String, String>(songUrl, songTitle);
+  });
+}
 
-List<Music> playList = [
-  Music(
-    uid: uid,
-    userId: userId,
-    title: 'Song One',
-    artist: 'Artist One',
-    url: 'https://listen.radioking.com/radio/242578/stream/286663',
-  ),
-  Music(
-    uid: uid,
-    userId: userId,
-    title: 'Song Two',
-    artist: 'Artist Two',
-    url: 'https://listen.radioking.com/radio/242578/stream/286663',
-  ),
-  Music(
-    uid: uid,
-    userId: userId,
-    title: 'Song Three',
-    artist: 'Artist Three',
-    url: 'https://listen.radioking.com/radio/242578/stream/286663',
-  ),
-  Music(
-    uid: uid,
-    userId: userId,
-    title: 'Song Four',
-    artist: 'Artist Four',
-    url: 'https://listen.radioking.com/radio/242578/stream/286663',
-  ),
-  Music(
-    uid: uid,
-    userId: userId,
-    title: 'Song Five',
-    artist: 'Artist Five',
-    url: 'https://listen.radioking.com/radio/242578/stream/286663',
-  ),
-  Music(
-    uid: uid,
-    userId: userId,
-    title: 'Song Six',
-    artist: 'Artist Six',
-    url: 'https://listen.radioking.com/radio/242578/stream/286663',
-  ),
-  Music(
-    uid: uid,
-    userId: userId,
-    title: 'Song Seven',
-    artist: 'Artist Seven',
-    url: 'https://listen.radioking.com/radio/242578/stream/286663',
-  ),
-  Music(
-    uid: uid,
-    userId: userId,
-    title: 'Song Eight',
-    artist: 'Artist Eight',
-    url: 'https://listen.radioking.com/radio/242578/stream/286663',
-  ),
-  Music(
-    uid: uid,
-    userId: userId,
-    title: 'Song Nine',
-    artist: 'Artist Nine',
-    url: 'https://listen.radioking.com/radio/242578/stream/286663',
-  ),
-  Music(
-    uid: uid,
-    userId: userId,
-    title: 'Song Ten',
-    artist: 'Artist Ten',
-    url: 'https://listen.radioking.com/radio/242578/stream/286663',
-  ),
-];
+final songsList = generateSongsList();
+
+final playlist = ConcatenatingAudioSource(
+  children: [
+    for (var song in songsList)
+      AudioSource.uri(
+        Uri.parse(song.item1),
+        tag: {
+          'item1': song.item1,
+          'item2': song.item2,
+        },
+      ),
+  ],
+);
