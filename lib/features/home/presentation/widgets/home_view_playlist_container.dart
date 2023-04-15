@@ -1,8 +1,12 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:stopify/constants/app_colors.dart';
 import 'package:stopify/features/home/data/datasources/dump_data.dart';
 import 'package:stopify/features/home/presentation/state/playlist_manager.dart';
 import 'package:stopify/features/home/presentation/widgets/download_button/download_button.dart';
+import 'package:uuid/uuid.dart';
 
 class PlayListContainer extends StatefulWidget {
   const PlayListContainer({
@@ -48,10 +52,14 @@ class _PlayListContainerState extends State<PlayListContainer> {
       height: widget.mediaQuerySize.height / 2,
       child: ValueListenableBuilder(
           valueListenable: widget.playlistManager.playlistNotifier,
-          builder: (context, playlistTitles, _) {
+          builder: (context, playlists, _) {
             return ListView.separated(
               itemBuilder: (context, index) {
-                return _buildListItem(context, index, playlistTitles[index]);
+                // print('Playlist item 1: ${playlists[index].item1}');
+                // print('Playlist item 2: ${playlists[index].item2}');
+
+                return _buildListItem(context, index, playlists[index].item1,
+                    playlists[index].item2);
               },
               separatorBuilder: (_, __) => const Padding(
                 padding: EdgeInsets.only(left: 32),
@@ -60,13 +68,14 @@ class _PlayListContainerState extends State<PlayListContainer> {
                   color: Colors.white70,
                 ),
               ),
-              itemCount: playlistTitles.length,
+              itemCount: playlists.length,
             );
           }),
     );
   }
 
-  Widget _buildListItem(BuildContext context, int index, String title) {
+  Widget _buildListItem(
+      BuildContext context, int index, String trackUrl, String title) {
     final downloadController = _downloadControllers[index];
 
     return ListTile(
@@ -91,7 +100,7 @@ class _PlayListContainerState extends State<PlayListContainer> {
             return DownloadButton(
               status: downloadController.downloadStatus,
               downloadProgress: downloadController.progress,
-              onDownload: downloadController.startDownload,
+              onDownload: () => downloadController.startDownload(trackUrl),
               onCancel: downloadController.stopDownload,
               onOpen: downloadController.openDownload,
             );
@@ -113,7 +122,7 @@ abstract class DownloadController implements ChangeNotifier {
   DownloadStatus get downloadStatus;
   double get progress;
 
-  void startDownload();
+  void startDownload(String trackUrl);
   void stopDownload();
   void openDownload();
 }
@@ -141,11 +150,34 @@ class SimulatedDownloadController extends DownloadController
   bool _isDownloading = false;
 
   @override
-  void startDownload() {
+  void startDownload(String trackUrl) async {
     if (downloadStatus == DownloadStatus.notDownloaded) {
       _doSimulatedDownload();
 
-      //TODO: Write the file into Download directory with path provider
+      final downloadsDir = await getApplicationDocumentsDirectory();
+      Map<Permission, PermissionStatus> statuses = await [
+        Permission.storage,
+      ].request();
+
+      if (statuses[Permission.storage]!.isGranted) {
+        var dir = downloadsDir;
+
+        var uuid = const Uuid();
+        var uid = uuid.v1();
+
+        String savename = 'stopify-$uid.mp3';
+        String savePath = "${dir.path}/$savename";
+
+        try {
+          final dio = Dio();
+          await dio.download(trackUrl, savePath);
+          print('Song is saved to download folder.');
+        } on DioError catch (e) {
+          print(e);
+        }
+      } else {
+        print('No permission to read and write.');
+      }
     }
   }
 

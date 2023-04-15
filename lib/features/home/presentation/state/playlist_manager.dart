@@ -3,10 +3,11 @@ import 'package:just_audio/just_audio.dart';
 import 'package:stopify/features/home/data/datasources/dump_data.dart';
 import 'package:stopify/features/home/presentation/notifiers/play_button_notifier.dart';
 import 'package:stopify/features/home/presentation/notifiers/progress_notifier.dart';
+import 'package:tuple/tuple.dart';
 
 class PlaylistManager {
   final currentSongTitleNotifier = ValueNotifier<String>('');
-  final playlistNotifier = ValueNotifier<List<String>>([]);
+  final playlistNotifier = ValueNotifier<List<Tuple2<String, String>>>([]);
   final progressNotifier = ProgressNotifier();
   final isFirstSongNotifier = ValueNotifier<bool>(true);
   final playButtonNotifier = PlayButtonNotifier();
@@ -90,20 +91,19 @@ class PlaylistManager {
     playlistAudioPlayer.sequenceStateStream.listen((sequenceState) {
       if (sequenceState == null) return;
 
-      // update current song title
       final currentItem = sequenceState.currentSource;
-      final title = currentItem?.tag as String?;
+      final title = currentItem?.tag['item2'] as String?;
       currentSongTitleNotifier.value = title ?? '';
 
-      // update playlist
       final playlist = sequenceState.effectiveSequence;
-      final titles = playlist.map((item) => item.tag as String).toList();
-      playlistNotifier.value = titles;
+      final tracks = playlist
+          .map((item) => Tuple2<String, String>(
+              item.tag['item1'] as String, item.tag['item2'] as String))
+          .toList();
+      playlistNotifier.value = tracks;
 
-      // update shuffle mode
       isShuffleModeEnabledNotifier.value = sequenceState.shuffleModeEnabled;
 
-      // update previous and next buttons
       if (playlist.isEmpty || currentItem == null) {
         isFirstSongNotifier.value = true;
         isLastSongNotifier.value = true;
