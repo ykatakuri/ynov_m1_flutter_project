@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stopify/features/listen/presentation/widgets/custom_player/player_button.dart';
 import 'package:stopify/features/radio/presentation/state/radio_manager.dart';
+import 'package:stopify/shared/presentation/widgets/player_button.dart';
 
 class RadioPlayer extends StatefulWidget {
   const RadioPlayer({super.key});
