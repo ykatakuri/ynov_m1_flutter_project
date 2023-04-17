@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:stopify/features/home/presentation/widgets/download_button/progress_indicator.dart';
-import 'package:stopify/features/home/presentation/widgets/home_view_playlist_container.dart';
+import 'package:stopify/features/listen/presentation/widgets/download_button/progress_indicator.dart';
+import 'package:stopify/features/listen/presentation/widgets/home_view_playlist_container.dart';
 
 @immutable
 class DownloadButton extends StatelessWidget {

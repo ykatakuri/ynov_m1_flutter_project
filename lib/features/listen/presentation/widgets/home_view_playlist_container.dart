@@ -2,9 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:stopify/features/home/data/datasources/dump_data.dart';
-import 'package:stopify/features/home/presentation/state/playlist_manager.dart';
-import 'package:stopify/features/home/presentation/widgets/download_button/download_button.dart';
+import 'package:stopify/features/listen/data/datasources/dump_data.dart';
+import 'package:stopify/features/listen/presentation/state/playlist_manager.dart';
+import 'package:stopify/features/listen/presentation/widgets/download_button/download_button.dart';
 import 'package:uuid/uuid.dart';
 
 class PlayListContainer extends StatefulWidget {

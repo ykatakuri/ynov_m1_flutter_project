@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stopify/constants/constants.dart';
-import 'package:stopify/features/home/presentation/screens/home_screen.dart';
+import 'package:stopify/shared/presentation/screens/app_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const DefaultTabController(
         length: Constants.tabBarLength,
-        child: HomeScreen(),
+        child: AppScreen(),
       ),
       debugShowCheckedModeBanner: false,
     );

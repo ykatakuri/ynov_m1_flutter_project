@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:stopify/features/home/presentation/state/playlist_manager.dart';
-import 'package:stopify/features/home/presentation/widgets/custom_player/custom_player.dart';
-import 'package:stopify/features/home/presentation/widgets/floating_player/floating_player_controls.dart';
+import 'package:stopify/features/listen/presentation/state/playlist_manager.dart';
+import 'package:stopify/features/listen/presentation/widgets/custom_player/custom_player.dart';
+import 'package:stopify/features/listen/presentation/widgets/floating_player/floating_player_controls.dart';
 
 class FloatingPlayer extends StatelessWidget {
   const FloatingPlayer({

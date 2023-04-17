@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:stopify/features/home/data/datasources/dump_data.dart';
-import 'package:stopify/features/home/presentation/notifiers/play_button_notifier.dart';
-import 'package:stopify/features/home/presentation/notifiers/progress_notifier.dart';
+import 'package:stopify/features/listen/data/datasources/dump_data.dart';
+import 'package:stopify/features/listen/presentation/notifiers/play_button_notifier.dart';
+import 'package:stopify/features/listen/presentation/notifiers/progress_notifier.dart';
 import 'package:tuple/tuple.dart';
 
 class PlaylistManager {

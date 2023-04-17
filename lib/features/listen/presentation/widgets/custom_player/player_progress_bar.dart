@@ -1,7 +1,7 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:stopify/features/home/presentation/notifiers/progress_notifier.dart';
-import 'package:stopify/features/home/presentation/state/playlist_manager.dart';
+import 'package:stopify/features/listen/presentation/notifiers/progress_notifier.dart';
+import 'package:stopify/features/listen/presentation/state/playlist_manager.dart';
 
 class PlayerProgressBar extends StatelessWidget {
   const PlayerProgressBar({

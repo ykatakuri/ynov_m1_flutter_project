@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:stopify/features/home/presentation/state/playlist_manager.dart';
-import 'package:stopify/features/home/presentation/widgets/hero/hero_button.dart';
-import 'package:stopify/features/home/presentation/widgets/hero/hero_cover.dart';
+import 'package:stopify/features/listen/presentation/state/playlist_manager.dart';
+import 'package:stopify/features/listen/presentation/widgets/hero/hero_button.dart';
+import 'package:stopify/features/listen/presentation/widgets/hero/hero_cover.dart';
 
 class HomeViewHero extends StatelessWidget {
   const HomeViewHero({

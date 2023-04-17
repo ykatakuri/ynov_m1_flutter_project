@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stopify/features/home/presentation/state/playlist_manager.dart';
+import 'package:stopify/features/listen/presentation/state/playlist_manager.dart';
 
 class CurrentSongTitle extends StatelessWidget {
   const CurrentSongTitle({
