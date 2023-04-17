@@ -4,9 +4,6 @@ class Constants {
   static double playerElevation = 8;
   static double previousAndNextIconSize = 50;
   static double playAndPauseIconSize = 70;
-  // Radio streaming URL
-  static const radioUrl =
-      'https://listen.radioking.com/radio/242578/stream/286663';
 
   // Tab bar
   static const listenText = 'Écouter';
@@ -18,4 +15,8 @@ class Constants {
 
   // Cover URL
   static const coverURL = 'https://i.postimg.cc/RFh9WWWw/cover.png';
+
+  // Radio streaming URL
+  static const radioUrl =
+      'https://listen.radioking.com/radio/242578/stream/286663';
 }
