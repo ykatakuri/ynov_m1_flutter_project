@@ -39,7 +39,7 @@ class _ListenViewState extends State<ListenView> {
       appBar: AppBar(
         centerTitle: false,
         leadingWidth: 0,
-        title: const Text(Constants.appName),
+        title: const Text(Constants.listenText),
         titleTextStyle: const TextStyle(
           fontSize: 30,
           fontWeight: FontWeight.w700,
