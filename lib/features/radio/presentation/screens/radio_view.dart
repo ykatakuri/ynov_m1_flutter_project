@@ -101,7 +101,11 @@ class Item extends StatelessWidget {
         ),
         child: MetadataContainer(data: data),
       ),
-      onTap: () => Navigator.pushNamed(context, '/radioPlayer'),
+      onTap: () => Navigator.pushNamed(
+        context,
+        '/radioPlayer',
+        arguments: data?.name ?? 'Radio name',
+      ),
     );
   }
 }

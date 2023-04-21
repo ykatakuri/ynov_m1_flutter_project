@@ -27,6 +27,8 @@ class _RadioPlayerState extends State<RadioPlayer> {
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as String;
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -40,7 +42,7 @@ class _RadioPlayerState extends State<RadioPlayer> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const RadioNameContainer(),
+          RadioNameContainer(radioName: args),
           const StaticIconContainer(),
           const LiveLabelContainer(),
           RadioPlayerButton(radioManager: radioManager),
@@ -163,8 +165,11 @@ class StaticIconContainer extends StatelessWidget {
 
 class RadioNameContainer extends StatelessWidget {
   const RadioNameContainer({
+    required this.radioName,
     super.key,
   });
+
+  final String radioName;
 
   @override
   Widget build(BuildContext context) {
@@ -201,11 +206,11 @@ class RadioNameContainer extends StatelessWidget {
                 ),
                 color: Colors.black,
               ),
-              child: const Text(
-                'Radio name',
-                style: TextStyle(
+              child: Text(
+                radioName,
+                style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 30,
+                  fontSize: 20,
                   fontWeight: FontWeight.w700,
                 ),
               ),
