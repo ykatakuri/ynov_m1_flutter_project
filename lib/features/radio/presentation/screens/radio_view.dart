@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:stopify/constants/constants.dart';
 
@@ -39,25 +40,30 @@ class RadioItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Container(
-        height: 300,
-        margin: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 20,
-        ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          image: const DecorationImage(
-            image: NetworkImage(
-              Constants.coverURL,
-            ),
-            fit: BoxFit.cover,
+    return CachedNetworkImage(
+      imageUrl: Constants.coverURL,
+      imageBuilder: (context, imageProvider) => GestureDetector(
+        child: Container(
+          height: 300,
+          margin: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 20,
           ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            image: DecorationImage(
+              image: imageProvider,
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: const RadioMetaData(),
         ),
-        child: const RadioMetaData(),
+        onTap: () => Navigator.pushNamed(context, '/radioPlayer'),
       ),
-      onTap: () => Navigator.pushNamed(context, '/radioPlayer'),
+      placeholder: (context, url) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+      errorWidget: (context, url, error) => const Icon(Icons.error),
     );
   }
 }
