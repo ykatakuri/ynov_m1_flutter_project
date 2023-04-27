@@ -19,4 +19,8 @@ class Constants {
   // Radio streaming URL
   static const radioUrl =
       'https://listen.radioking.com/radio/242578/stream/286663';
+
+  // Jamendo API
+  static const apiBaseUrl = 'https://api.jamendo.com/v3.0';
+  static const clientId = '16d11b3b';
 }
