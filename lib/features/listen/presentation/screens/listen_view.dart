@@ -3,7 +3,7 @@ import 'package:stopify/constants/constants.dart';
 import 'package:stopify/features/listen/presentation/state/playlist_manager.dart';
 import 'package:stopify/features/listen/presentation/widgets/floating_player/floating_player.dart';
 import 'package:stopify/features/listen/presentation/widgets/hero/home_view_hero.dart';
-import 'package:stopify/features/listen/presentation/widgets/home_view_playlist_container.dart';
+import 'package:stopify/features/listen/presentation/widgets/listen_view_playlist_container.dart';
 
 class ListenView extends StatefulWidget {
   const ListenView({super.key});
