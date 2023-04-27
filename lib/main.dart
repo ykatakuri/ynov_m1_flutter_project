@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:stopify/constants/app_colors.dart';
 import 'package:stopify/constants/constants.dart';
-import 'package:stopify/features/home/presentation/screens/home_screen.dart';
+import 'package:stopify/features/radio/presentation/screens/radio_player.dart';
+import 'package:stopify/shared/presentation/screens/app_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,15 +14,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: Constants.appName,
+      routes: {
+        '/radioPlayer': (context) => const RadioPlayer(),
+      },
       theme: ThemeData(
-        primaryColor: AppColors.primaryColor,
+        primaryColor: Colors.black,
         bottomSheetTheme: BottomSheetThemeData(
           backgroundColor: Colors.black.withOpacity(0.7),
         ),
       ),
       home: const DefaultTabController(
         length: Constants.tabBarLength,
-        child: HomeScreen(),
+        child: AppScreen(),
       ),
       debugShowCheckedModeBanner: false,
     );
