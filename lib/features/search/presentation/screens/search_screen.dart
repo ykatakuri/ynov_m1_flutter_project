@@ -59,16 +59,7 @@ class _SearchScreenState extends State<SearchScreen> {
         appBar: AppBar(
           centerTitle: false,
           leadingWidth: 0,
-          title: SearchBarAnimation(
-            textEditingController: searchController,
-            trailingWidget: const Icon(Icons.search),
-            isOriginalAnimation: false,
-            secondaryButtonWidget: const Icon(Icons.close),
-            buttonWidget: const Icon(Icons.search),
-            enableKeyboardFocus: true,
-            onChanged: onSearch(),
-            onFieldSubmitted: onSearch(),
-          ),
+          title: const Text(Constants.searchText),
           titleTextStyle: const TextStyle(
             fontSize: 30,
             fontWeight: FontWeight.w700,
@@ -77,6 +68,23 @@ class _SearchScreenState extends State<SearchScreen> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           shadowColor: Colors.black,
+          actions: [
+            SearchBarAnimation(
+              textEditingController: searchController,
+              hintText: 'Artistes, morceaux, paroles, etc.',
+              trailingWidget: const Icon(Icons.search),
+              isOriginalAnimation: false,
+              secondaryButtonWidget: const Icon(Icons.close),
+              buttonWidget: const Icon(Icons.search),
+              enableKeyboardFocus: false,
+              searchBoxWidth: 350,
+              onChanged: onSearch(),
+              onFieldSubmitted: onSearch(),
+              onEditingComplete: () {
+                FocusScope.of(context).unfocus();
+              },
+            ),
+          ],
         ),
         body: searchResults.isEmpty
             ? const EmptyResult()
