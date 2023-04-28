@@ -14,14 +14,15 @@ class TrackManager {
   final buttonNotifier = ValueNotifier<ButtonState>(ButtonState.paused);
 
   late AudioPlayer _audioPlayer;
-  TrackManager() {
+  final String _url;
+
+  TrackManager({required String url}) : _url = url {
     init();
   }
 
-  void init({String trackUrl = ''}) async {
+  void init() async {
     _audioPlayer = AudioPlayer();
-    await _audioPlayer.setUrl(
-        'https://prod-1.storage.jamendo.com/?trackid=1892463&format=mp32&from=24c%2BbDHTU%2BGIf6ODYJVOAg%3D%3D%7Cmvey5E1dXSoflr3%2FzgDu9g%3D%3D');
+    await _audioPlayer.setUrl(_url);
 
     _audioPlayer.playerStateStream.listen((playerState) {
       final isPlaying = playerState.playing;
