@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:searchbar_animation/searchbar_animation.dart';
 import 'package:stopify/features/search/domain/repositories/search_repository.dart';
+import 'package:stopify/routing/app_router.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -82,7 +83,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         ),
                         onTap: () => Navigator.pushNamed(
                               context,
-                              '/trackPlayer',
+                              AppRoute.trackPlayer.location,
                               arguments: searchResults[index],
                             ));
                   },
@@ -103,7 +104,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Function onSearch() {
     return ((String value) {
-      if (value.isNotEmpty && value.length > 2) {
+      if (value.isNotEmpty) {
         SearchRepository.searchTrack(value).then((value) {
           setState(() {
             searchResults = value;
