@@ -45,23 +45,21 @@ class _PlayListContainerState extends State<PlayListContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ValueListenableBuilder(
-          valueListenable: widget.playlistManager.playlistNotifier,
-          builder: (context, playlists, _) {
-            return Column(
-              children: [
-                for (var playlist in playlists)
-                  _buildListItem(
-                    context,
-                    playlists.indexOf(playlist),
-                    playlist.item1,
-                    playlist.item2,
-                  ),
-              ],
-            );
-          }),
-    );
+    return ValueListenableBuilder(
+        valueListenable: widget.playlistManager.playlistNotifier,
+        builder: (context, playlists, _) {
+          return Column(
+            children: [
+              for (var playlist in playlists)
+                _buildListItem(
+                  context,
+                  playlists.indexOf(playlist),
+                  playlist.item1,
+                  playlist.item2,
+                ),
+            ],
+          );
+        });
   }
 
   Widget _buildListItem(
@@ -155,7 +153,7 @@ class SimulatedDownloadController extends DownloadController
     if (downloadStatus == DownloadStatus.notDownloaded) {
       _doSimulatedDownload();
 
-      final downloadsDir = await getApplicationDocumentsDirectory();
+      final downloadsDir = await getTemporaryDirectory();
       Map<Permission, PermissionStatus> statuses = await [
         Permission.storage,
       ].request();
@@ -172,7 +170,7 @@ class SimulatedDownloadController extends DownloadController
         try {
           final dio = Dio();
           await dio.download(trackUrl, savePath);
-          print('Song is saved to download folder.');
+          print('Song is saved to download folder.$savePath');
         } on DioError catch (e) {
           print(e);
         }
