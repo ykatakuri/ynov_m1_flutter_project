@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stopify/constants/constants.dart';
 import 'package:stopify/features/radio/presentation/screens/radio_player.dart';
+import 'package:stopify/routing/app_router.dart';
 import 'package:stopify/shared/presentation/screens/app_screen.dart';
 import 'package:stopify/shared/presentation/screens/track_player.dart';
 
@@ -16,8 +17,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: Constants.appName,
       routes: {
-        '/radioPlayer': (context) => const RadioPlayer(),
-        '/trackPlayer': (context) => const TrackPlayer(),
+        AppRoute.radioPlayer.location: (context) => const RadioPlayer(),
+        AppRoute.trackPlayer.location: (context) => const TrackPlayer(),
       },
       theme: ThemeData(
         primaryColor: Colors.black,

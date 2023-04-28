@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stopify/constants/constants.dart';
 import 'package:stopify/features/radio/data/models/radio_model.dart';
 import 'package:stopify/features/radio/domain/repositories/radio_repository.dart';
+import 'package:stopify/routing/app_router.dart';
 
 class RadioView extends StatefulWidget {
   const RadioView({super.key});
@@ -103,7 +104,7 @@ class Item extends StatelessWidget {
       ),
       onTap: () => Navigator.pushNamed(
         context,
-        '/radioPlayer',
+        AppRoute.radioPlayer.location,
         arguments: data?.name ?? 'Radio name',
       ),
     );
