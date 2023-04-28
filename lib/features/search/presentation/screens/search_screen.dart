@@ -22,7 +22,11 @@ class _SearchScreenState extends State<SearchScreen> {
     super.initState();
     searchResults = [];
 
-    Timer(const Duration(seconds: 5), () {
+    delaySearchResults();
+  }
+
+  Timer delaySearchResults() {
+    return Timer(const Duration(seconds: 5), () {
       setState(() {
         isLoading = false;
       });
