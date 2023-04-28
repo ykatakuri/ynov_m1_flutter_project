@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stopify/features/listen/presentation/state/playlist_manager.dart';
+import 'package:stopify/features/listen/presentation/widgets/custom_player/listen_player_progress_bar.dart';
 import 'package:stopify/features/listen/presentation/widgets/custom_player/player_controls.dart';
-import 'package:stopify/features/listen/presentation/widgets/custom_player/player_progress_bar.dart';
 
 class CustomPlayer extends StatelessWidget {
   const CustomPlayer({
@@ -51,7 +51,7 @@ class CustomPlayer extends StatelessWidget {
             ),
             child: Column(
               children: [
-                PlayerProgressBar(playlistManager: _playlistManager),
+                ListenPlayerProgressBar(playlistManager: _playlistManager),
                 PlayerControls(playlistManager: _playlistManager),
               ],
             ),
