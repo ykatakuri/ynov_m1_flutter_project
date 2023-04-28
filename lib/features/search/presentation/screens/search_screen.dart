@@ -53,32 +53,38 @@ class _SearchScreenState extends State<SearchScreen> {
                 child: ListView.separated(
                   itemCount: searchResults.length,
                   itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(
-                        searchResults[index].name,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
+                    return GestureDetector(
+                        child: ListTile(
+                          title: Text(
+                            searchResults[index].name,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                          subtitle: Text(
+                            '${searchResults[index].albumName} . ${searchResults[index].artistName}',
+                            style: const TextStyle(
+                              color: Colors.white70,
+                              fontSize: 12,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          leading: Image.network(
+                            searchResults[index].albumImage,
+                            width: 50,
+                            height: 50,
+                          ),
+                          trailing: const Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.white70,
+                          ),
                         ),
-                      ),
-                      subtitle: Text(
-                        '${searchResults[index].albumName} . ${searchResults[index].artistName}',
-                        style: const TextStyle(
-                          color: Colors.white70,
-                          fontSize: 12,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      leading: Image.network(
-                        searchResults[index].albumImage,
-                        width: 50,
-                        height: 50,
-                      ),
-                      trailing: const Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.white70,
-                      ),
-                    );
+                        onTap: () => Navigator.pushNamed(
+                              context,
+                              '/trackPlayer',
+                              arguments: searchResults[index],
+                            ));
                   },
                   separatorBuilder: (context, index) {
                     return const Padding(
