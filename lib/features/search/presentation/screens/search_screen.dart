@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:searchbar_animation/searchbar_animation.dart';
 import 'package:stopify/features/search/domain/repositories/search_repository.dart';
@@ -13,11 +15,18 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   TextEditingController searchController = TextEditingController();
   late List searchResults;
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
     searchResults = [];
+
+    Timer(const Duration(seconds: 5), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
   }
 
   @override
@@ -49,55 +58,61 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
         body: searchResults.isEmpty
             ? const EmptyResult()
-            : Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: ListView.separated(
-                  itemCount: searchResults.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                        child: ListTile(
-                          title: Text(
-                            searchResults[index].name,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
+            : isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: ListView.separated(
+                      itemCount: searchResults.length,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                            child: ListTile(
+                              title: Text(
+                                searchResults[index].name,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              subtitle: Text(
+                                '${searchResults[index].albumName} . ${searchResults[index].artistName}',
+                                style: const TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 12,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              leading: Image.network(
+                                searchResults[index].albumImage,
+                                width: 50,
+                                height: 50,
+                              ),
+                              trailing: const Icon(
+                                Icons.arrow_forward_ios,
+                                color: Colors.white70,
+                              ),
                             ),
-                          ),
-                          subtitle: Text(
-                            '${searchResults[index].albumName} . ${searchResults[index].artistName}',
-                            style: const TextStyle(
-                              color: Colors.white70,
-                              fontSize: 12,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          leading: Image.network(
-                            searchResults[index].albumImage,
-                            width: 50,
-                            height: 50,
-                          ),
-                          trailing: const Icon(
-                            Icons.arrow_forward_ios,
+                            onTap: () => Navigator.pushNamed(
+                                  context,
+                                  AppRoute.trackPlayer.location,
+                                  arguments: searchResults[index],
+                                ));
+                      },
+                      separatorBuilder: (context, index) {
+                        return const Padding(
+                          padding: EdgeInsets.only(left: 16.0),
+                          child: Divider(
                             color: Colors.white70,
+                            thickness: 1,
                           ),
-                        ),
-                        onTap: () => Navigator.pushNamed(
-                              context,
-                              AppRoute.trackPlayer.location,
-                              arguments: searchResults[index],
-                            ));
-                  },
-                  separatorBuilder: (context, index) {
-                    return const Padding(
-                      padding: EdgeInsets.only(left: 16.0),
-                      child: Divider(
-                        color: Colors.white70,
-                        thickness: 1,
-                      ),
-                    );
-                  },
-                ),
-              ),
+                        );
+                      },
+                    ),
+                  ),
       ),
     );
   }
