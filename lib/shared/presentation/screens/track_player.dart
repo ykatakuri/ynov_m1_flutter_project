@@ -42,9 +42,7 @@ class _TrackPlayerState extends State<TrackPlayer> {
         elevation: 0,
         shadowColor: Colors.black,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: ListView(
         children: [
           AlbumImageContainer(
             albumImage: args.albumImage ?? Constants.coverURL,
