@@ -23,4 +23,6 @@ class Constants {
   // Jamendo API
   static const apiBaseUrl = 'https://api.jamendo.com/v3.0';
   static const clientId = '16d11b3b';
+  static const defaultUrl =
+      'https://prod-1.storage.jamendo.com/?trackid=1892463&format=mp32&from=24c%2BbDHTU%2BGIf6ODYJVOAg%3D%3D%7Cmvey5E1dXSoflr3%2FzgDu9g%3D%3D';
 }
