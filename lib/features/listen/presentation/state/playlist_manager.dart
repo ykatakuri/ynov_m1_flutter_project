@@ -92,13 +92,13 @@ class PlaylistManager {
       if (sequenceState == null) return;
 
       final currentItem = sequenceState.currentSource;
-      final title = currentItem?.tag['item2'] as String?;
+      final title = currentItem?.tag.title as String?;
       currentSongTitleNotifier.value = title ?? '';
 
       final playlist = sequenceState.effectiveSequence;
       final tracks = playlist
           .map((item) => Tuple2<String, String>(
-              item.tag['item1'] as String, item.tag['item2'] as String))
+              item.tag.album as String, item.tag.title as String))
           .toList();
       playlistNotifier.value = tracks;
 
