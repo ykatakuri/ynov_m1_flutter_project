@@ -50,6 +50,7 @@ class _ListenViewState extends State<ListenView> {
         shadowColor: Colors.black,
       ),
       body: ListView(
+        padding: const EdgeInsets.only(bottom: 100),
         children: [
           HomeViewHero(
             coverContainerWidth: coverContainerWidth,
