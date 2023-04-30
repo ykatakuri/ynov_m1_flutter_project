@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:stopify/constants/constants.dart';
 import 'package:stopify/features/radio/presentation/screens/radio_player.dart';
 import 'package:stopify/routing/app_router.dart';
@@ -15,6 +16,12 @@ Future<void> main() async {
       ignoreSsl:
           true // option: set to false to disable working with http links (default: false)
       );
+
+  await JustAudioBackground.init(
+    androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
+    androidNotificationChannelName: 'Audio playback',
+    androidNotificationOngoing: true,
+  );
 
   runApp(const MyApp());
 }
