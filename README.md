@@ -11,6 +11,9 @@ Our app contains the below features:
 - Search for a song
 - Listen a stream audio
 
+## Supported platform
+iOS
+
 ## Architecture
 
 ![alt text](https://i0.wp.com/resocoder.com/wp-content/uploads/2019/08/Clean-Architecture-Flutter-Diagram.png?w=556&ssl=1)
