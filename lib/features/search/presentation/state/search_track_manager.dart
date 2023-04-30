@@ -3,7 +3,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:stopify/shared/utils/progress_notifier.dart';
 
-class LibraryManager {
+class SearchTrackManager {
   final progressNotifier = ValueNotifier<ProgressBarState>(
     const ProgressBarState(
       current: Duration.zero,
@@ -15,18 +15,18 @@ class LibraryManager {
   final buttonNotifier = ValueNotifier<ButtonState>(ButtonState.paused);
 
   late AudioPlayer _audioPlayer;
-  final String _path;
+  final String _url;
 
-  LibraryManager({required String path}) : _path = path {
+  SearchTrackManager({required String url}) : _url = url {
     init();
   }
 
   void init() async {
     _audioPlayer = AudioPlayer();
     await _audioPlayer.setAudioSource(
-      AudioSource.file(
-        _path,
-        tag: MediaItem(id: _path, title: _path.split('/').last),
+      AudioSource.uri(
+        Uri.parse(_url),
+        tag: MediaItem(id: _url, title: 'track'),
       ),
     );
 
