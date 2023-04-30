@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stopify/features/library/presentation/screens/library_screen.dart';
 import 'package:stopify/features/listen/presentation/screens/listen_view.dart';
 import 'package:stopify/features/listen/presentation/widgets/custom_bottom_tab_bar.dart';
 import 'package:stopify/features/radio/presentation/screens/radio_view.dart';
@@ -15,10 +16,7 @@ class AppScreen extends StatelessWidget {
         children: [
           ListenView(),
           RadioView(),
-          Icon(
-            Icons.library_music,
-            color: Colors.white,
-          ),
+          LibraryScreen(),
           SearchScreen(),
         ],
       ),

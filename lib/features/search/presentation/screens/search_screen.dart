@@ -8,6 +8,7 @@ import 'package:stopify/shared/presentation/screens/widgets/album_image_containe
 import 'package:stopify/shared/presentation/screens/widgets/player_progress_bar.dart';
 import 'package:stopify/shared/presentation/screens/widgets/track_player_button.dart';
 import 'package:stopify/shared/presentation/state/track_manager.dart';
+import 'package:stopify/shared/presentation/widgets/empty_result.dart';
 import 'package:text_scroll/text_scroll.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -59,16 +60,7 @@ class _SearchScreenState extends State<SearchScreen> {
         appBar: AppBar(
           centerTitle: false,
           leadingWidth: 0,
-          title: SearchBarAnimation(
-            textEditingController: searchController,
-            trailingWidget: const Icon(Icons.search),
-            isOriginalAnimation: false,
-            secondaryButtonWidget: const Icon(Icons.close),
-            buttonWidget: const Icon(Icons.search),
-            enableKeyboardFocus: true,
-            onChanged: onSearch(),
-            onFieldSubmitted: onSearch(),
-          ),
+          title: const Text(Constants.searchText),
           titleTextStyle: const TextStyle(
             fontSize: 30,
             fontWeight: FontWeight.w700,
@@ -77,9 +69,26 @@ class _SearchScreenState extends State<SearchScreen> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           shadowColor: Colors.black,
+          actions: [
+            SearchBarAnimation(
+              textEditingController: searchController,
+              hintText: 'Artistes, morceaux, paroles, etc.',
+              trailingWidget: const Icon(Icons.search),
+              isOriginalAnimation: false,
+              secondaryButtonWidget: const Icon(Icons.close),
+              buttonWidget: const Icon(Icons.search),
+              enableKeyboardFocus: false,
+              searchBoxWidth: 350,
+              onChanged: onSearch(),
+              onFieldSubmitted: onSearch(),
+              onEditingComplete: () {
+                FocusScope.of(context).unfocus();
+              },
+            ),
+          ],
         ),
         body: searchResults.isEmpty
-            ? const EmptyResult()
+            ? const EmptyResult(text: 'Rechercher une musique')
             : isLoading
                 ? const Center(
                     child: CircularProgressIndicator(
@@ -222,24 +231,5 @@ class _SearchScreenState extends State<SearchScreen> {
         });
       }
     });
-  }
-}
-
-class EmptyResult extends StatelessWidget {
-  const EmptyResult({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Rechercher une musique',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 20,
-        ),
-      ),
-    );
   }
 }
