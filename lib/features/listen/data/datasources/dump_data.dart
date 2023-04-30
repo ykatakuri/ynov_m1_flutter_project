@@ -8,7 +8,7 @@ List<Tuple2<String, String>> generateSongsList() {
   return List<Tuple2<String, String>>.generate(20, (index) {
     int songNumber = index + 1;
     String songUrl = '$prefix/SoundHelix-Song-$songNumber.mp3';
-    String songTitle = 'Song $songNumber';
+    String songTitle = 'SoundHelix-Song $songNumber';
     return Tuple2<String, String>(songUrl, songTitle);
   });
 }
