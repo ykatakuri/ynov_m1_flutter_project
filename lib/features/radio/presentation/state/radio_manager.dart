@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:stopify/constants/constants.dart';
 
 class RadioManager {
   final buttonNotifier = ValueNotifier<ButtonState>(ButtonState.paused);
 
   late AudioPlayer _audioPlayer;
+
   RadioManager() {
     _init();
   }
 
   void _init() async {
     _audioPlayer = AudioPlayer();
-    await _audioPlayer.setUrl(Constants.radioUrl);
+    await _audioPlayer.setAudioSource(
+      AudioSource.uri(
+        Uri.parse(Constants.radioUrl),
+        tag: const MediaItem(
+          id: Constants.radioUrl,
+          title: Constants.radioText,
+        ),
+      ),
+    );
 
     _audioPlayer.playerStateStream.listen((playerState) {
       final isPlaying = playerState.playing;
