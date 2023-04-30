@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:searchbar_animation/searchbar_animation.dart';
 import 'package:stopify/constants/constants.dart';
 import 'package:stopify/features/search/domain/repositories/search_repository.dart';
+import 'package:stopify/features/search/presentation/screens/widgets/search_player_progress_bar.dart';
+import 'package:stopify/features/search/presentation/screens/widgets/search_track_player_button.dart';
+import 'package:stopify/features/search/presentation/state/search_track_manager.dart';
 import 'package:stopify/shared/presentation/screens/widgets/album_image_container.dart';
-import 'package:stopify/shared/presentation/screens/widgets/player_progress_bar.dart';
-import 'package:stopify/shared/presentation/screens/widgets/track_player_button.dart';
-import 'package:stopify/shared/presentation/state/track_manager.dart';
 import 'package:stopify/shared/presentation/widgets/empty_result.dart';
 import 'package:text_scroll/text_scroll.dart';
 
@@ -23,7 +23,7 @@ class _SearchScreenState extends State<SearchScreen> {
   late List searchResults;
   bool isLoading = true;
 
-  late TrackManager trackManager;
+  late SearchTrackManager trackManager;
 
   late String audioUrl;
 
@@ -135,7 +135,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                 isScrollControlled: true,
                                 isDismissible: true,
                                 builder: (context) {
-                                  trackManager = TrackManager(url: audioUrl);
+                                  trackManager =
+                                      SearchTrackManager(url: audioUrl);
 
                                   return Container(
                                     color: Colors.transparent,
@@ -189,10 +190,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                               ),
                                             ),
                                           ),
-                                          PlayerProgressBar(
+                                          SearchPlayerProgressBar(
                                               trackManager: trackManager),
                                           const SizedBox(height: 20),
-                                          TrackPlayerButton(
+                                          SearchTrackPlayerButton(
                                               trackManager: trackManager),
                                         ],
                                       ),
