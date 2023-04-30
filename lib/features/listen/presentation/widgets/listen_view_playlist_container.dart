@@ -1,11 +1,13 @@
-import 'package:dio/dio.dart';
+import 'dart:isolate';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:stopify/features/listen/data/datasources/dump_data.dart';
 import 'package:stopify/features/listen/presentation/state/playlist_manager.dart';
 import 'package:stopify/features/listen/presentation/widgets/download_button/download_button.dart';
-import 'package:uuid/uuid.dart';
 
 class PlayListContainer extends StatefulWidget {
   const PlayListContainer({
@@ -22,15 +24,33 @@ class PlayListContainer extends StatefulWidget {
 class _PlayListContainerState extends State<PlayListContainer> {
   late final List<DownloadController> _downloadControllers;
 
+  int progress = 0;
+  final ReceivePort _port = ReceivePort();
+
   @override
   void initState() {
-    super.initState();
+    IsolateNameServer.registerPortWithName(_port.sendPort, 'downloadingmusic');
+
+    _port.listen((dynamic message) {
+      setState(() {
+        progress = message;
+      });
+    });
+
     _downloadControllers = List<DownloadController>.generate(
       playlist.length,
       (index) => SimulatedDownloadController(onOpenDownload: () {
         _openDownload(index);
       }),
     );
+
+    FlutterDownloader.registerCallback(downloadCallback);
+    super.initState();
+  }
+
+  static downloadCallback(id, status, progress) {
+    SendPort sendPort = IsolateNameServer.lookupPortByName('downloadingmusic')!;
+    sendPort.send(progress);
   }
 
   void _openDownload(int index) {
@@ -130,7 +150,7 @@ class SimulatedDownloadController extends DownloadController
     with ChangeNotifier {
   SimulatedDownloadController({
     DownloadStatus downloadStatus = DownloadStatus.notDownloaded,
-    double progress = 0.0,
+    double progress = 0,
     required VoidCallback onOpenDownload,
   })  : _downloadStatus = downloadStatus,
         _progress = progress,
@@ -153,29 +173,19 @@ class SimulatedDownloadController extends DownloadController
     if (downloadStatus == DownloadStatus.notDownloaded) {
       _doSimulatedDownload();
 
-      final downloadsDir = await getTemporaryDirectory();
-      Map<Permission, PermissionStatus> statuses = await [
-        Permission.storage,
-      ].request();
+      final status = await Permission.storage.request();
 
-      if (statuses[Permission.storage]!.isGranted) {
-        var dir = downloadsDir;
+      if (status.isGranted) {
+        final baseStorage = await getApplicationDocumentsDirectory();
 
-        var uuid = const Uuid();
-        var uid = uuid.v1();
-
-        String savename = 'stopify-$uid.mp3';
-        String savePath = "${dir.path}/$savename";
-
-        try {
-          final dio = Dio();
-          await dio.download(trackUrl, savePath);
-          print('Song is saved to download folder.$savePath');
-        } on DioError catch (e) {
-          print(e);
-        }
+        await FlutterDownloader.enqueue(
+          url: trackUrl,
+          savedDir: baseStorage.path,
+          showNotification: true,
+          openFileFromNotification: true,
+        );
       } else {
-        print('No permission to read and write.');
+        debugPrint('Permission denied');
       }
     }
   }
@@ -185,7 +195,7 @@ class SimulatedDownloadController extends DownloadController
     if (_isDownloading) {
       _isDownloading = false;
       _downloadStatus = DownloadStatus.notDownloaded;
-      _progress = 0.0;
+      _progress = progress;
       notifyListeners();
     }
   }
@@ -215,7 +225,7 @@ class SimulatedDownloadController extends DownloadController
     const downloadProgressStops = [0.0, 0.15, 0.45, 0.8, 1.0];
     for (final stop in downloadProgressStops) {
       // Wait a second to simulate varying download speeds.
-      await Future<void>.delayed(const Duration(seconds: 1));
+      await Future<void>.delayed(const Duration(seconds: 3));
 
       // If the user chose to cancel the download, stop the simulation.
       if (!_isDownloading) {
@@ -228,7 +238,7 @@ class SimulatedDownloadController extends DownloadController
     }
 
     // Wait a second to simulate a final delay.
-    await Future<void>.delayed(const Duration(seconds: 1));
+    await Future<void>.delayed(const Duration(seconds: 2));
 
     // If the user chose to cancel the download, stop the simulation.
     if (!_isDownloading) {
