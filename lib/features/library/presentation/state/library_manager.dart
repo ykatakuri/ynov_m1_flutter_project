@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:stopify/shared/utils/progress_notifier.dart';
 
 class LibraryManager {
@@ -22,7 +23,12 @@ class LibraryManager {
 
   void init() async {
     _audioPlayer = AudioPlayer();
-    await _audioPlayer.setFilePath(_path);
+    await _audioPlayer.setAudioSource(
+      AudioSource.file(
+        _path,
+        tag: MediaItem(id: _path, title: _path.split('/').last),
+      ),
+    );
 
     _audioPlayer.playerStateStream.listen((playerState) {
       final isPlaying = playerState.playing;
