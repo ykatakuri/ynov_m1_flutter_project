@@ -37,8 +37,16 @@ dependencies:
   flutter_launcher_icons: ^0.12.0
   flutter_native_splash: ^2.2.19
   just_audio: ^0.9.32
-  uuid: ^3.0.7
   audio_video_progress_bar: ^1.0.1
+  cached_network_image: ^3.2.3
+  path_provider: ^2.0.14
+  permission_handler: ^10.2.0
+  tuple: ^2.0.1
+  http: ^0.13.5
+  searchbar_animation: ^0.0.4
+  text_scroll: ^0.2.0
+  flutter_downloader: ^1.10.2
+  just_audio_background: ^0.0.1-beta.9
 
 dev_dependencies:
   flutter_test:
