@@ -8,6 +8,7 @@ import 'package:stopify/features/library/presentation/state/library_manager.dart
 import 'package:stopify/features/library/presentation/widget/library_player_button.dart';
 import 'package:stopify/features/library/presentation/widget/library_player_progress_bar.dart';
 import 'package:stopify/shared/presentation/screens/widgets/album_image_container.dart';
+import 'package:stopify/shared/presentation/widgets/empty_result.dart';
 import 'package:text_scroll/text_scroll.dart';
 
 class LibraryScreen extends StatefulWidget {
@@ -20,7 +21,7 @@ class LibraryScreen extends StatefulWidget {
 class _LibraryScreenState extends State<LibraryScreen> {
   bool isLoading = true;
 
-  List<FileSystemEntity?> downloadedSongs = [];
+  List<dynamic> downloadedSongs = [];
 
   late LibraryManager libraryManager;
 
@@ -35,6 +36,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
     filename = '';
 
     delayDisplaying();
+    getDownloadedFiles();
   }
 
   @override
@@ -44,11 +46,11 @@ class _LibraryScreenState extends State<LibraryScreen> {
   }
 
   Future<void> getDownloadedFiles() async {
-    Directory? directory = await getTemporaryDirectory();
+    Directory? directory = await getApplicationDocumentsDirectory();
     setState(() {
       downloadedSongs = directory
           .listSync()
-          .where((file) => file.path.endsWith('.*'))
+          .where((file) => file.path.endsWith('.mp3'))
           .toList();
     });
   }
@@ -80,12 +82,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
           shadowColor: Colors.black,
         ),
         body: downloadedSongs.isEmpty
-            // ? const EmptyResult(text: 'Aucune musique disponible')
-            ? ElevatedButton(
-                onPressed: () {
-                  debugPrint('PATH: $downloadedSongs');
-                },
-                child: const Text('Test'))
+            ? const EmptyResult(text: 'Aucune musique disponible')
             : isLoading
                 ? const Center(
                     child: CircularProgressIndicator(
